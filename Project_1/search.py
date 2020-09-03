@@ -110,18 +110,20 @@ def jump_search(lyst, target):
 def randarray():
     """ Creates an array of random integers and assigns it to seed(1). """
     random.seed(1)  # saves the generated list to seed(1)
-    return sorted(random.sample(range(10000000), k=6000))
+    return sorted(random.sample(range(10000000), k=60000))
 
 
 def main():
     global ValueError_checker
-    target = 3533  # Edit values here.
+    target_start = 3719  # Edit values here.
+    target_mid = 5669005
+    target_end = 9999393
 
     # start of array
     print('Searching for a number at the start of the array..')
 
     linear_search_time_start_1 = perf_counter()
-    linear_search_start_of_array = linear_search(randarray(), target)
+    linear_search_start_of_array = linear_search(randarray(), target_start)
     linear_search_time_stop_1 = perf_counter()
     linear_search_time_1 = linear_search_time_stop_1 - linear_search_time_start_1
     print(
@@ -130,7 +132,7 @@ def main():
     ValueError_checker = False
     recursive_binary_search_time_start_1 = perf_counter()
     recursive_binary_search_start_of_array = recursive_binary_search(
-        randarray(), target)
+        randarray(), target_start)
     recursive_binary_search_time_stop_1 = perf_counter()
     recursive_binary_search_time_1 = recursive_binary_search_time_stop_1 - \
         recursive_binary_search_time_start_1
@@ -139,7 +141,7 @@ def main():
 
     ValueError_checker = False
     jump_search_time_start_1 = perf_counter()
-    jump_search_start_of_array = jump_search(randarray(), target)
+    jump_search_start_of_array = jump_search(randarray(), target_start)
     jump_search_time_stop_1 = perf_counter()
     jump_search_time_1 = jump_search_time_stop_1 - jump_search_time_start_1
     print(
@@ -149,7 +151,7 @@ def main():
     print('Searching for a number in the middle of the array..')
 
     linear_search_time_start_2 = perf_counter()
-    linear_search_start_of_array = linear_search(randarray(), target)
+    linear_search_start_of_array = linear_search(randarray(), target_mid)
     linear_search_time_stop_2 = perf_counter()
     linear_search_time_2 = linear_search_time_stop_2 - linear_search_time_start_2
     print(
@@ -158,7 +160,7 @@ def main():
     ValueError_checker = False
     recursive_binary_search_time_start_2 = perf_counter()
     recursive_binary_search_start_of_array = recursive_binary_search(
-        randarray(), target)
+        randarray(), target_mid)
     recursive_binary_search_time_stop_2 = perf_counter()
     recursive_binary_search_time_2 = recursive_binary_search_time_stop_2 - \
         recursive_binary_search_time_start_2
@@ -167,7 +169,7 @@ def main():
 
     ValueError_checker = False
     jump_search_time_start_2 = perf_counter()
-    jump_search_start_of_array = jump_search(randarray(), target)
+    jump_search_start_of_array = jump_search(randarray(), target_mid)
     jump_search_time_stop_2 = perf_counter()
     jump_search_time_2 = jump_search_time_stop_2 - jump_search_time_start_2
     print(
@@ -176,7 +178,7 @@ def main():
     # end of array
     print('Searching for a number at the end of the array..')
     linear_search_time_start_3 = perf_counter()
-    linear_search_start_of_array = linear_search(randarray(), target)
+    linear_search_start_of_array = linear_search(randarray(), target_end)
     linear_search_time_stop_3 = perf_counter()
     linear_search_time_3 = linear_search_time_stop_3 - linear_search_time_start_3
     print(
@@ -185,7 +187,7 @@ def main():
     ValueError_checker = False
     recursive_binary_search_time_start_3 = perf_counter()
     recursive_binary_search_start_of_array = recursive_binary_search(
-        randarray(), target)
+        randarray(), target_end)
     recursive_binary_search_time_stop_3 = perf_counter()
     recursive_binary_search_time_3 = recursive_binary_search_time_stop_3 - \
         recursive_binary_search_time_start_3
@@ -194,7 +196,7 @@ def main():
 
     ValueError_checker = False
     jump_search_time_start_3 = perf_counter()
-    jump_search_start_of_array = jump_search(randarray(), target)
+    jump_search_start_of_array = jump_search(randarray(), target_end)
     jump_search_time_stop_3 = perf_counter()
     jump_search_time_3 = jump_search_time_stop_3 - jump_search_time_start_3
     print(
