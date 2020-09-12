@@ -11,19 +11,22 @@ def quicksort(lyst):
                     return quicksort_helper(lyst)
                 else:
                     raise ValueError(
-                        'ValueError: List contains 1 or more non integer type values. Please use integers only.')
+                        'ValueError: List contains 1 or more '
+                        'non integer type values.\n')
             except ValueError as err:
                 print(err)
+                raise
         else:
             raise ValueError(
-                'ValueError: Parameter is not a list. Please pass in a list. \n')
+                'ValueError: Parameter is not a list.\n')
     except ValueError as err:
         print(err)
+        raise
 
 
 def quicksort_helper(lyst):
-    """ The recursive part of quicksort. """
-    RecursionCounter()  # needed for unit test
+    """The recursive part of quicksort."""
+    RecursionCounter()
     length_of_list = len(lyst)
 
     if length_of_list < 2:
@@ -56,21 +59,24 @@ def mergesort(lyst):
             try:
                 if all(type(x) is int for x in lyst):
                     return mergesort_helper(lyst)
-                else:
+                elif all(type(x) is not int for x in lyst):
                     raise ValueError(
-                        'ValueError: List contains 1 or more non integer type values. Please use integers only.')
+                        'ValueError: List contains 1 or more '
+                        'non integer type values.\n')
             except ValueError as err:
                 print(err)
+                raise
         else:
             raise ValueError(
-                'ValueError: Parameter is not a list. Please pass in a list. \n')
+                'ValueError: Parameter is not a list.\n')
     except ValueError as err:
         print(err)
+        raise
 
 
 def mergesort_helper(lyst):
-    """ The recursive part of mergesort. """
-    RecursionCounter()  # needed for unit test
+    """The recursive part of mergesort."""
+    RecursionCounter()
 
     if len(lyst) > 1:
         mid = len(lyst) // 2
@@ -80,8 +86,9 @@ def mergesort_helper(lyst):
         mergesort_helper(left)
         mergesort_helper(right)
 
-        i, j, k = 0, 0, 0
-
+        i = 0
+        j = 0
+        k = 0
         while i < len(left) and j < len(right):
             if left[i] < right[j]:
                 lyst[k] = left[i]
@@ -111,7 +118,6 @@ def insertion_sort(lyst):
                 if all(type(x) is int for x in lyst):
                     for i in range(1, len(lyst)):
                         key = lyst[i]
-
                         j = i - 1
                         while j >= 0 and lyst[j] > key:
                             lyst[j + 1] = lyst[j]
@@ -121,16 +127,17 @@ def insertion_sort(lyst):
                     return lyst
                 else:
                     raise ValueError(
-                        'ValueError: List contains 1 or more non integer type values. Please use integers only.')
-
+                        'ValueError: List contains 1 or more '
+                        'non integer type values.\n')
             except ValueError as err:
                 print(err)
+                raise
         else:
             raise ValueError(
-                'ValueError: Parameter is not a list. Please pass in a list. \n')
-
+                'ValueError: Parameter is not a list.\n')
     except ValueError as err:
         print(err)
+        raise
 
 
 def selection_sort(lyst):
@@ -146,6 +153,7 @@ def selection_sort(lyst):
                         for j in range(i+1, length_of_array):
                             if lyst[j] < lyst[minimum]:
                                 minimum = j
+
                         temp = lyst[i]
                         lyst[i] = lyst[minimum]
                         lyst[minimum] = temp
@@ -153,16 +161,17 @@ def selection_sort(lyst):
                     return lyst
                 else:
                     raise ValueError(
-                        'ValueError: List contains 1 or more non integer type values. Please use integers only.')
-
+                        'ValueError: List contains 1 or more '
+                        'non integer type values.\n')
             except ValueError as err:
                 print(err)
+                raise
         else:
             raise ValueError(
-                'ValueError: Parameter is not a list. Please pass in a list. \n')
-
+                'ValueError: Parameter is not a list.\n')
     except ValueError as err:
         print(err)
+        raise
 
 
 def timsort(lyst):
@@ -173,24 +182,21 @@ def timsort(lyst):
                     return sorted(lyst)
                 else:
                     raise ValueError(
-                        'ValueError: List contains 1 or more non integer type values. Please use integers only.')
+                        'ValueError: List contains 1 or more '
+                        'non integer type values.\n')
             except ValueError as err:
                 print(err)
+                raise
         else:
             raise ValueError(
-                'ValueError: Parameter is not a list. Please pass in a list. \n')
+                'ValueError: Parameter is not a list.\n')
     except ValueError as err:
         print(err)
+        raise
 
 
 def is_sorted(lyst):
-    """ is_sorted() -> True or False
-
-    Checks if the list passed in is sorted and returns True or False. 
-    This will also checks if all values in the list are integers. If not 
-    it will raise a ValueError.
-    """
-
+    """Checks if the list passed in is sorted and returns True or False."""
     try:
         if type(lyst) == list:
             try:
@@ -201,14 +207,17 @@ def is_sorted(lyst):
                         return False
                 else:
                     raise ValueError(
-                        'ValueError: List contains 1 or more non integer type values. Please use integers only.')
-            except ValueError as e:
-                print(e)
+                        'ValueError: List contains 1 or more '
+                        'non integer type values.\n')
+            except ValueError as err:
+                print(err)
+                raise
         else:
             raise ValueError(
-                'ValueError: Parameter is not a list. Please pass in a list. \n')
+                'ValueError: Parameter is not a list.\n')
     except ValueError as err:
         print(err)
+        raise
 
 
 def main():
@@ -218,101 +227,67 @@ def main():
 
     # quick sort
     print('\nchecking if list is sorted..')
-    if is_sorted(DATA.copy()) == False:
+    if is_sorted(DATA.copy()) is False:
         print('starting quick sort...')
         quicksort_start = perf_counter()
         quicksort(DATA.copy())
         quicksort_stop = perf_counter()
         quicksort_time = quicksort_stop - quicksort_start
-        print(f'quick sort duration {"%.10f"%quicksort_time} seconds. \n')
-    elif is_sorted(DATA.copy()) == True:
+        print(f'quick sort duration {"%.10f"%quicksort_time} seconds.\n')
+    elif is_sorted(DATA.copy()) is True:
         print('list sorted')
 
     # merge sort
     print('checking if list is sorted..')
-    if is_sorted(DATA.copy()) == False:
+    if is_sorted(DATA.copy()) is False:
         print('starting merge sort...')
         mergesort_start = perf_counter()
-        mergesort(DATA.copy())  # add a print statement to see sorted list
+        mergesort(DATA.copy())
         mergesort_stop = perf_counter()
         mergesort_time = mergesort_stop - mergesort_start
-        print(f'merge sort duration {"%.10f"%mergesort_time} seconds. \n')
-    elif is_sorted(DATA.copy()) == True:
+        print(f'merge sort duration {"%.10f"%mergesort_time} seconds.\n')
+    elif is_sorted(DATA.copy()) is True:
         print('list sorted')
 
     # insertion sort
     print('checking if list is sorted..')
-    if is_sorted(DATA.copy()) == False:
+    if is_sorted(DATA.copy()) is False:
         print('starting insertion sort...')
         insertion_sort_start = perf_counter()
-        insertion_sort(DATA.copy())  # add a print statement to see sorted list
+        insertion_sort(DATA.copy())
         insertion_sort_stop = perf_counter()
         insertion_sort_time = insertion_sort_stop - insertion_sort_start
         print(
-            f'insertion sort duration {"%.10f"%insertion_sort_time} seconds. \n')
-    elif is_sorted(DATA.copy()) == True:
+            'insertion sort duration '
+            f'{"%.10f"%insertion_sort_time} seconds.\n')
+    elif is_sorted(DATA.copy()) is True:
         print('List sorted')
 
     # selection sort
     print('checking if list is sorted..')
-    if is_sorted(DATA.copy()) == False:
+    if is_sorted(DATA.copy()) is False:
         print('starting selection sort...')
         selection_sort_start = perf_counter()
-        selection_sort(DATA.copy())  # add a print statement to see sorted list
+        selection_sort(DATA.copy())
         selection_sort_stop = perf_counter()
         selection_sort_time = selection_sort_stop - selection_sort_start
         print(
-            f'selection sort duration {"%.10f"%selection_sort_time} seconds. \n')
-    elif is_sorted(DATA.copy()) == True:
+            'selection sort duration '
+            f'{"%.10f"%selection_sort_time} seconds.\n')
+    elif is_sorted(DATA.copy()) is True:
         print('List sorted')
 
     # timsort
     print('checking if list is sorted..')
-    if is_sorted(DATA.copy()) == False:
+    if is_sorted(DATA.copy()) is False:
         print('starting timsort...')
         timsort_start = perf_counter()
-        timsort(DATA.copy())  # add a print statement to see sorted list
+        timsort(DATA.copy())
         timsort_end = perf_counter()
         timsort_time = timsort_end - timsort_start
-        print(f'timsort duration {"%.10f"%timsort_time} seconds. \n')
-    elif is_sorted(DATA.copy()) == True:
+        print(f'timsort duration {"%.10f"%timsort_time} seconds.\n')
+    elif is_sorted(DATA.copy()) is True:
         print('List sorted')
-
-    # print('UNSORTED RANDARRAY: ', DATA)
 
 
 main()
-
-
-""" Each function should """
-# verify that the parameter is a list                               [DONE]
-# assume the list only contains integers                            [DONE]
-# assume the list is randomized                                     [DONE]
-# each function should return a sorted list                         [DONE]
-# must use built in timsort --> dont write yourself                 [DONE]
-# use the recursive counter function for quicksort and mergesort    [DONE]
-
-
-""" Checklist """
-# quick sort                             [DONE]
-# quick sort helper                      [DONE] https://www.educative.io/edpresso/how-to-implement-quicksort-in-python
-# mergesort                              [DONE]
-# mergesort helper                       [DONE] https://www.educative.io/edpresso/merge-sort-in-python
-# insertion sort                         [DONE] https://www.educative.io/edpresso/how-to-implement-insertion-sort-in-python
-# selection sort                         [DONE] https://www.educative.io/edpresso/how-to-implement-selection-sort-in-python
-# random array                           [DONE]
-# timing for all functions               [DONE]
-# main                                   [IN PROGRESS]
-# timing results are are 2 sigfigs       [DONE]
-# use large array size (10,000 - 50,000) [DONE]
-# built in timsort                       [DONE] https://realpython.com/sorting-algorithms-python/#implementing-timsort-in-pytho
-# test is_sorted()                       [DONE]
-# is_sorted() should verify list type    [DONE]
-# each function should verify list type  [DONE]
-
-
-""" Other """
-# make sure that the lyst is randomized after every function            [FIXED] use DATA.copy()
-# remove the return statement of each function when done                [REMOVED]
-# meets coding stanadards (8.5+)                                        [DONE]
-# Remove notes for submission                                           []
