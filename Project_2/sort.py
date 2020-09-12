@@ -2,7 +2,6 @@ from recursioncounter import RecursionCounter
 from time import perf_counter
 import random
 
-
 def quicksort(lyst):
     try:
         if type(lyst) == list:
