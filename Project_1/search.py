@@ -202,7 +202,7 @@ def main():
     print(
         f'\tjump_search() returned {jump_search_start_of_array} in {"%.10f"%jump_search_time_3} seconds')
 
-    # use this to find info on array
+    # use this to find info on your random array
     # print(randarray()) 
 
 
