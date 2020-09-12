@@ -108,7 +108,7 @@ def jump_search(lyst, target):
 
 
 def randarray():
-    """ Creates an array of random integers and assigns it to seed(1). """
+    """Creates an array of random integers and assigns it to seed(1)."""
     random.seed(1)  # saves the generated list to seed(1)
     return sorted(random.sample(range(10000000), k=60000))
 
