@@ -51,6 +51,6 @@ main()
 # study linked lists and learn how to implement them        []
 # readfile data.txt and create a linked list                []
 # create and blueprint course.py                            [DONE]
-# create and blupring courselist.py                         []
+# create and bluprint courselist.py                         [DONE]
 # finish course.py                                          []
 # finish courselist.py                                      []
