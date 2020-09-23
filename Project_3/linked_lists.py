@@ -54,3 +54,11 @@ main()
 # create and bluprint courselist.py                         [DONE]
 # finish course.py                                          []
 # finish courselist.py                                      []
+
+
+
+
+""" resources """
+# linked lists: https://www.educative.io/edpresso/how-to-create-a-linked-list-in-python
+# linked lists: https://www.udemy.com/course/python-for-data-structures-algorithms-and-interviews/learn/lecture/3179598#overview
+# __iter__() and __next__(): https://www.programiz.com/python-programming/iterator
