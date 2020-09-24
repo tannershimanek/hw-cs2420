@@ -2,7 +2,7 @@ class Courselist:
 
     def __init__(self):
         """ Courselist implements a linked list to hold an UNLIMITED number of courses. """
-        pass
+        # create a linked list of all courses linking to the single course linked list
 
     def insert(self, Course):
         """ Insert the specified course by course number in ascending order. """
@@ -13,7 +13,7 @@ class Courselist:
         pass
 
     def remove_all(self, number):
-        """ Remoces ALL occurances of the specified course. """
+        """ Removes ALL occurances of the specified course. """
         pass
     
     def find(self, number):
@@ -34,7 +34,7 @@ class Courselist:
 
     def __str__(self):
         """ Returns a string with each course's data on a seperate line. """
-        pass
+        return 'Connected!'
 
     def __iter__(self):
         # https://www.programiz.com/python-programming/iterator

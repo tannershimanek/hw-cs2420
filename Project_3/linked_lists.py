@@ -1,5 +1,21 @@
+from course import Course
+from courselist import Courselist
+
+
 def main():
-    print('main')
+    # C = Course()
+    # CL = Courselist()
+    # print('Course: ', C.__str__())
+    # print('Courselist: ', CL.__str__(), '\n')
+
+    f = open('data.txt', 'r')
+
+    lines = f.readlines()
+    for line in lines:
+        print(Course(line).__str__())
+    
+
+
 
 
 
