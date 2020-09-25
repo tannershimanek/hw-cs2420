@@ -6,7 +6,7 @@ class Course:
         self.data = data.split(',')
 
     def number(self):
-        """ Retrieves course number as an integer """
+        """ Retrieves course number as an integer. """
         try:
             class_number = int(self.data[0])
             return class_number

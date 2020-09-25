@@ -2,17 +2,25 @@ from course import Course
 from courselist import Courselist
 
 
-def main():
-    # C = Course()
-    # CL = Courselist()
-    # print('Course: ', C.__str__())
-    # print('Courselist: ', CL.__str__(), '\n')
 
+
+def main():
+    CL = Courselist()
     f = open('data.txt', 'r')
 
     lines = f.readlines()
     for line in lines:
-        print(Course(line).__str__())
+        course = Course(line)
+        # print(course)
+        CL.insert(course)
+        
+
+
+
+
+    # check size of linked list
+    # print(CL.size())
+    print(CL)
     
 
 
@@ -30,46 +38,46 @@ main()
 
 
 """ CRITERIA """
-# linked list is the underlying data structure.                 []
-# ALL list traversals must be  must be recursion (NO LOOPS)     []
-# each class must be in a different module (course.py)          []
-# use recursion counter                                         []
+# linked list is the underlying data structure.                 [IN PROGRESS]
+# ALL list traversals must be  must be recursion (NO LOOPS)     [IN PROGRESS]
+# each class must be in a different module (course.py)          [DONE]
+# use recursion counter                                         [IN PROGRESS]
 # pass with a pylint score of 8.5 or higher                     []
 # pass the unit test in test_linked_list.py                     []
 
 
 """ Course ADT """
-# constructor: must have default parameters for all values                                              []
-# constructor: must validate all parameters                                                             []
-# numbers(): retrieves a course number as an integer                                                    []
-# name(): retrieves a course name as a string                                                           []
-# credit_hr(): revieve credits as a floating-point number                                               []
-# grade(): retrieve grade as a numeric value in range 4.0 - 0.0                                         []
-# __str__(): returns a string representing a single course as shown in the program outpus section       []
+# constructor: must have default parameters for all values                                              [DONE]
+# constructor: must validate all parameters                                                             [DONE]
+# numbers(): retrieves a course number as an integer                                                    [DONE]
+# name(): retrieves a course name as a string                                                           [DONE]
+# credit_hr(): revieve credits as a floating-point number                                               [DONE]
+# grade(): retrieve grade as a numeric value in range 4.0 - 0.0                                         [IN PROGRESS]
+# __str__(): returns a string representing a single course as shown in the program output section       [DONE]
 # course information stored in data.txt                                                                 [DONE]
-# readfile data.txt[]
+# readfile data.txt                                                                                     [DONE]
 
 
 """ CourseList ADT """
 # constructor to initialize all needed data for an empty list                                   []
-# insert(Course): insert the specified course in course number in ascending order               []
+# insert(Course): insert the specified course in course number in ascending order               [IN PROGRESS]
 # remove(number): remove the first occurrence of the specified course                           []
 # remove_all(number): removes ALL occurrences of the specified course                           []
 # find(number): find the first occurrance of the specified course in the list or return -1      []
-# size(): return the number of items in the list                                                []
+# size(): return the number of items in the list                                                [DONE]
 # calculate_gpa(): return the GPA using all courses in the list                                 []
 # is_sorted(): return True if the list is sorted by course number, False if otherwise           []
-# __str__(): returns a string with each course's data on a seperate line                        []
+# __str__(): returns a string with each course's data on a seperate line                        [DONE]
 # __iter__() and __next__(): the list must be iterable                                          []
 
 
 """ tasks """
-# study linked lists and learn how to implement them        []
-# readfile data.txt and create a linked list                []
+# study linked lists and learn how to implement them        [IN PROGRESS]
+# readfile data.txt and create an object                    [DONE]
 # create and blueprint course.py                            [DONE]
 # create and bluprint courselist.py                         [DONE]
-# finish course.py                                          []
-# finish courselist.py                                      []
+# finish course.py                                          [IN PROGRESS]
+# finish courselist.py                                      [IN PROGRESS]
 
 
 
