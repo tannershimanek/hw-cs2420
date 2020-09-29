@@ -1,43 +1,83 @@
 class Course:
 
-    def __init__(self, data = None):
-        """ Course ADT that gets a class number, name, credit hour, and grade. Then it returns a string representing a single course. """
-        # TODO STORE EACH METHOD IN A LINKED LIST     
-        self.data = data.split(',')
+    def __init__(self, class_number=None, class_name=None, class_credit_hrs=None, class_grade=None):
+        """Course ADT that gets a class number, name, credit hour, and grade.
+        Once done, it returns a string representing a single course.
+        """
+        # self.data = data.split(',')
+
+        # validate params
+        self.class_number = class_number
+        self.class_name = class_name
+        self.class_credit_hrs = class_credit_hrs
+        self.class_grade = class_grade
+
+        # try:
+        #     if type(self.number) is type(int):
+        #             self.number = int(number)
+        #     else:
+        #         raise ValueError('class number not int')
+        # except ValueError as err:
+        #     print(err)
+        #     raise
+
+        # try:
+        #     if type(self.name) is type(str):
+        #             self.name = str(name)
+        #     else:
+        #         raise ValueError('class name is not str')
+        # except ValueError as err:
+        #     print(err)
+        #     raise
+
+        # try:
+        #     if type(self.credit_hrs) is type(float):
+        #             self.credit_hrs = float(credit_hrs)
+        #     else:
+        #         raise ValueError('class credit_hrs not float')
+        # except ValueError as err:
+        #     print(err)
+        #     raise
+
+        # try:
+        #     if type(self.grade) is type(float):
+        #             self.grade = float(grade)
+        #     else:
+        #         raise ValueError('class grade is not float')
+        # except ValueError as err:
+        #     print(err)
+        #     raise
 
     def number(self):
-        """ Retrieves course number as an integer. """
+        """Retrieves course number as an integer."""
         try:
-            class_number = int(self.data[0])
-            return class_number
+            return self.class_number
         except ValueError:
-            print('Course number must be an integer.')
-            raise ValueError('number must receive int type parameters')
+            # print('Course number must be an integer.')
+            raise ValueError('number must receive int type parameters. \n')
 
     def name(self):
-        """ Retrieves course name as a string. """
+        """Retrieves course name as a string."""
         try:
-            class_name = str(self.data[1])
-            return class_name
+            return self.class_name
         except ValueError:
             raise ValueError('name must receive string type parameters. \n')
 
     def credit_hr(self):
-        """ Retrieves Credits as a floating-point number. """
+        """Retrieves Credits as a floating-point number."""
         try:
-            credit_hrs = float(self.data[2])
-            return credit_hrs
+            return self.class_credit_hrs
         except ValueError:
-            raise ValueError('credit_hr must receive float type parameters. \n') 
+            raise ValueError(
+                'credit_hr must receive float type parameters. \n')
 
     def grade(self):
-        """ Retrieves Grade as a numeric value in range 4.0 to 0.0. """
+        """Retrieves Grade as a numeric value in range 4.0 to 0.0."""
         try:
-            class_grade = float(self.data[3])
-            return class_grade
+            return self.class_grade
         except ValueError:
             raise ValueError('grade must receive a float type parameter. \n')
 
     def __str__(self):
-        """ returns a string representing a single Course as shown in the Program Output section. """
-        return f'cs{self.number()} {self.name()} Grade: {self.grade()} Credit Hours: {self.credit_hr()} \n'
+        """returns a string representing a single Course."""
+        return f'{self.number()} {self.name()} {self.grade()} {self.credit_hr()}'
