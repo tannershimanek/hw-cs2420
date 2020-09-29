@@ -28,10 +28,10 @@ def main():
     print(CL)
     print(CL.calculate_gpa())
 
-    print(CL.find(2810))
+    # print(CL.find(2810))
     print('+++++++++++++++++++++++++++++++++++++++++++++')
     # print(CL)
-    print(CL.find(2810))
+    # print(CL.find(2810))
     print('+++++++++++++++++++++++++++++++++++++++++++++')
     
     # CL.insert(1400)
@@ -39,6 +39,7 @@ def main():
     print('+++++++++++++++++++++++++++++++++++++++++++++')
     # CL.remove(1030)
     # CL.remove(1400)
+    # CL.insert(Course(1030, 'Introduction to Computers', 3.2, 2.0))
     # CL.insert(Course(2810, 'Computer Architecture', 3.0, 3.8))
     # CL.insert(Course(2810, 'Computer Architecture', 3.0, 3.8))
     # CL.insert(Course(2810, 'Computer Architecture', 3.0, 3.8))
@@ -50,9 +51,13 @@ def main():
     # print(next(iter(CL)))
     # print(next(iter(CL)))
     # CL.remove_all(2810)
+    print(CL.is_sorted())
 
-    
-    print(CL)
+
+    # z = CL.mergeSort(CL.head)
+    # CL.head = CL.mergeSort(CL.head)
+    # printlist(z)
+    # print(CL)
 
 
 main()
@@ -88,13 +93,13 @@ main()
 
 """ CourseList ADT """
 # constructor to initialize all needed data for an empty list                                   [IN PROGRESS]
-# insert(Course): insert the specified course in course number in ascending order               [IN PROGRESS]
+# insert(Course): insert the specified course in course number in ascending order               [DONE]
 # remove(number): remove the first occurrence of the specified course                           [DONE]
 # remove_all(number): removes ALL occurrences of the specified course                           []
 # find(number): find the first occurrance of the specified course in the list or return -1      [DONE]
 # size(): return the number of items in the list                                                [DONE]
 # calculate_gpa(): return the GPA using all courses in the list                                 [DONE]
-# is_sorted(): return True if the list is sorted by course number, False if otherwise           []
+# is_sorted(): return True if the list is sorted by course number, False if otherwise           [IN PROGRESS]
 # __str__(): returns a string with each course's data on a seperate line                        [DONE]
 # __iter__() and __next__(): the list must be iterable                                          [DONE]
 
@@ -109,6 +114,10 @@ main()
 # verify parameter types                                    []
 # fix insert bug                                            [DONE]
 # fix __str__ duplicate bug                                 [DONE]
+# fix insert just number bug                                [DONE]
+# make getmiddle recursive                                  []
+# make is_sorted() recursive                                [DONE]
+# rename functions and variables                            []
 
 
 

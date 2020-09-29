@@ -20,13 +20,13 @@ class CourseList:
 
     def insert(self, Course):
         """Insert the specified course by course number in ascending order."""
-        # TODO SORT
         newNode = Node(Course)
-        if(self.head):
+        if self.head:
             current = self.head
             self.insert_helper(current, newNode)
         else:
             self.head = newNode
+        self.head = self.merge_sort(self.head)
 
     def insert_helper(self, current, newNode):
         """Handles recursion for insert()"""
@@ -36,6 +36,50 @@ class CourseList:
             self.insert_helper(current, newNode)
         else:
             current.next = newNode
+
+    def sorted_merge(self, a, b):
+        """Handles the merging for the mergesort algorithm."""
+        result = None # idk if i need this. run tests and remove
+        if a == None:
+            return b
+        if b == None:
+            return a
+
+        if a.data.number() <= b.data.number():
+            result = a
+            result.next = self.sorted_merge(a.next, b)
+        else:
+            result = b
+            result.next = self.sorted_merge(a, b.next)
+        return result
+    
+    def merge_sort(self, h):
+        """Uses the mergesort algorithm to sort the linked list."""
+        if h == None or h.next == None:
+            return h
+        middle = self.get_middle(h)
+        nexttomiddle = middle.next
+
+        middle.next = None
+        left = self.merge_sort(h)
+        right = self.merge_sort(nexttomiddle)
+
+        sortedlist = self.sorted_merge(left, right)
+        return sortedlist
+
+    def get_middle(self, head):
+        """Finds the middle of the linked list."""
+        #TODO MAKE RECURSIVE
+        if (head == None):
+            return head
+
+        slow = head
+        fast = head
+        while fast.next != None and fast.next.next != None:
+            slow = slow.next
+            fast = fast.next.next
+
+        return slow
 
     def remove(self, number):
         """Removes the first occurance of the specified course."""
@@ -112,7 +156,20 @@ class CourseList:
 
     def is_sorted(self):
         """Returns True of the list is sorted by course number, False if otherwise."""
-        pass
+        current = self.head
+        if current == None:
+            return True
+        return self.is_sorted_helper(current)
+    
+    def is_sorted_helper(self, current):
+        """Handles recursion for is_sorted()."""
+        if current.next is not None:
+            temp = current
+            if temp.data.number() >= temp.next.data.number():
+                return False
+            current = current.next
+            self.is_sorted_helper(current)
+        return True
 
     def __str__(self):
         """Returns a string with each course's data on a seperate line."""
@@ -143,3 +200,8 @@ class CourseList:
             return item
         else:
             raise StopIteration
+
+
+
+
+
