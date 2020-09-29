@@ -25,16 +25,15 @@ def main():
 
         CL.insert(C)
 
-    # 1400
-
     print(CL)
+    print(CL.calculate_gpa())
 
     print(CL.find(2810))
     print('+++++++++++++++++++++++++++++++++++++++++++++')
     # print(CL)
     print(CL.find(2810))
     print('+++++++++++++++++++++++++++++++++++++++++++++')
-    print(CL.calculate_gpa())
+    
     # CL.insert(1400)
     # print(CL)
     print('+++++++++++++++++++++++++++++++++++++++++++++')
@@ -51,7 +50,8 @@ def main():
     # print(next(iter(CL)))
     # print(next(iter(CL)))
     # CL.remove_all(2810)
-    CL.sort()
+
+    
     print(CL)
 
 

@@ -12,7 +12,6 @@ class CourseList:
 
     def __init__(self, head=None):
         """Initializes a singly linked list."""
-        # create a linked list of all courses linking to the single course linked list
         self.head = head
         self.courselist = ''
         self.grade = 0.0
@@ -21,19 +20,22 @@ class CourseList:
 
     def insert(self, Course):
         """Insert the specified course by course number in ascending order."""
-        # make recursive
+        # TODO SORT
         newNode = Node(Course)
         if(self.head):
             current = self.head
-            while(current.next):
-                current = current.next
-            current.next = newNode
+            self.insert_helper(current, newNode)
         else:
             self.head = newNode
 
-    def insert_helper(self, current):
+    def insert_helper(self, current, newNode):
         """Handles recursion for insert()"""
-        pass
+        _ = RecursionCounter()
+        if current.next is not None:
+            current = current.next
+            self.insert_helper(current, newNode)
+        else:
+            current.next = newNode
 
     def remove(self, number):
         """Removes the first occurance of the specified course."""
@@ -46,7 +48,6 @@ class CourseList:
     def remove_helper(self, current, number):
         """Handles recursion for remove()"""
         _ = RecursionCounter()
-
         temp = current
         if current.next is not None:
             if temp.next.data.number() == number:
@@ -74,11 +75,8 @@ class CourseList:
         _ = RecursionCounter()
         if not current:
             return -1
-
         if current.data.number() == number:
-            # print('ok', number, current.data)
             return current
-        
         return self.find_helper(current.next, number)
 
     def size(self):
@@ -101,7 +99,6 @@ class CourseList:
     def calculate_gpa_helper(self, current):
         """Helper function to calulate GPA."""
         _ = RecursionCounter()
-
         if current.next is not None:
             self.grade = self.grade + current.data.grade() * current.data.credit_hr()
             self.credithrs = self.credithrs + current.data.credit_hr()
