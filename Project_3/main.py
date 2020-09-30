@@ -6,7 +6,10 @@ from courselist import CourseList
 
 def main():
     CL = CourseList()
-    f = open('data.txt', 'r')
+    # change this later
+    path = '/Users/tannershimanek/Documents/School/CS-2420-2020/Project_3/data.txt'
+    f = open(path, 'r')
+    
 
     lines = f.readlines()
     for line in lines:
@@ -40,10 +43,10 @@ def main():
     # CL.remove(1030)
     # CL.remove(1400)
     # CL.insert(Course(1030, 'Introduction to Computers', 3.2, 2.0))
-    # CL.insert(Course(2810, 'Computer Architecture', 3.0, 3.8))
-    # CL.insert(Course(2810, 'Computer Architecture', 3.0, 3.8))
-    # CL.insert(Course(2810, 'Computer Architecture', 3.0, 3.8))
-    # CL.insert(Course(2810, 'Computer Architecture', 3.0, 3.8))
+    CL.insert(Course(2810, 'Computer Architecture', 3.0, 3.8))
+    CL.insert(Course(2810, 'Computer Architecture', 3.0, 3.8))
+    CL.insert(Course(2810, 'Computer Architecture', 3.0, 3.8))
+    CL.insert(Course(2810, 'Computer Architecture', 3.0, 3.8))
     # print(CL)
     print('+++++++++++++++++++++++++++++++++++++++++++++')
     # print(next(iter(CL)))
@@ -57,7 +60,8 @@ def main():
     # z = CL.mergeSort(CL.head)
     # CL.head = CL.mergeSort(CL.head)
     # printlist(z)
-    # print(CL)
+    CL.remove_all(2810)
+    print(CL)
 
 
 main()
@@ -71,7 +75,7 @@ main()
 
 
 """ CRITERIA """
-# linked list is the underlying data structure.                 [IN PROGRESS]
+# linked list is the underlying data structure.                 [DONE]
 # ALL list traversals must be  must be recursion (NO LOOPS)     [IN PROGRESS]
 # each class must be in a different module (course.py)          [DONE]
 # use recursion counter                                         [IN PROGRESS]
@@ -80,7 +84,7 @@ main()
 
 
 """ Course ADT """
-# constructor: must have default parameters for all values                                              [DONE]
+# constructor: must have default parameters for all values                                              [IN PROGRESS]
 # constructor: must validate all parameters                                                             [IN PROGRESS]
 # numbers(): retrieves a course number as an integer                                                    [DONE]
 # name(): retrieves a course name as a string                                                           [DONE]
@@ -99,7 +103,7 @@ main()
 # find(number): find the first occurrance of the specified course in the list or return -1      [DONE]
 # size(): return the number of items in the list                                                [DONE]
 # calculate_gpa(): return the GPA using all courses in the list                                 [DONE]
-# is_sorted(): return True if the list is sorted by course number, False if otherwise           [IN PROGRESS]
+# is_sorted(): return True if the list is sorted by course number, False if otherwise           [DONE]
 # __str__(): returns a string with each course's data on a seperate line                        [DONE]
 # __iter__() and __next__(): the list must be iterable                                          [DONE]
 
@@ -115,9 +119,12 @@ main()
 # fix insert bug                                            [DONE]
 # fix __str__ duplicate bug                                 [DONE]
 # fix insert just number bug                                [DONE]
-# make getmiddle recursive                                  []
+# make getmiddle recursive                                  [DONE]
 # make is_sorted() recursive                                [DONE]
 # rename functions and variables                            []
+# create a variable data.number()                           [TENTATIVE]
+# make sure ALL helper methods have recur counter           [DONE]
+# reformat                                                  [DONE]
 
 
 

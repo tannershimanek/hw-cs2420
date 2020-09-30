@@ -39,12 +39,12 @@ class CourseList:
 
     def sorted_merge(self, a, b):
         """Handles the merging for the mergesort algorithm."""
-        result = None # idk if i need this. run tests and remove
-        if a == None:
+        _ = RecursionCounter()
+        result = None
+        if a is None:
             return b
-        if b == None:
+        if b is None:
             return a
-
         if a.data.number() <= b.data.number():
             result = a
             result.next = self.sorted_merge(a.next, b)
@@ -55,30 +55,33 @@ class CourseList:
     
     def merge_sort(self, h):
         """Uses the mergesort algorithm to sort the linked list."""
-        if h == None or h.next == None:
+        _ = RecursionCounter()
+        if h is None or h.next is None:
             return h
         middle = self.get_middle(h)
         nexttomiddle = middle.next
-
         middle.next = None
         left = self.merge_sort(h)
         right = self.merge_sort(nexttomiddle)
-
         sortedlist = self.sorted_merge(left, right)
         return sortedlist
 
     def get_middle(self, head):
         """Finds the middle of the linked list."""
-        #TODO MAKE RECURSIVE
-        if (head == None):
+        if head is None:
             return head
-
         slow = head
         fast = head
-        while fast.next != None and fast.next.next != None:
-            slow = slow.next
-            fast = fast.next.next
+        return self.get_middle_helper(slow, fast)
 
+    def get_middle_helper(self, slow, fast):
+        """Handles recursion for get_middle()."""
+        _ = RecursionCounter()
+        if fast.next is not None:
+            if fast.next.next is not None:
+                slow = slow.next
+                fast = fast.next.next
+                self.get_middle_helper(slow, fast)
         return slow
 
     def remove(self, number):
@@ -103,11 +106,24 @@ class CourseList:
 
     def remove_all(self, number):
         """Removes ALL occurances of the specified course."""
-        # https://www.geeksforgeeks.org/remove-occurrences-duplicates-sorted-linked-list/
-        pass
-
+        
+        if self.head is None:
+            return None
+        
+        while self.head is not None and self.head.data.number() == number:
+            self.head = self.head.next
+        
+        if self.head is not None:
+            current = self.head
+            while current.next is not None:
+                if current.next.data.number() == number:
+                    current.next = current.next.next
+                else:
+                    current = current.next
+        
     def remove_all_helper(self, current, data):
         """Handles recursion for remove_all()"""
+        _ = RecursionCounter()
         pass
 
     def find(self, number):
@@ -163,6 +179,7 @@ class CourseList:
     
     def is_sorted_helper(self, current):
         """Handles recursion for is_sorted()."""
+        _ = RecursionCounter()
         if current.next is not None:
             temp = current
             if temp.data.number() >= temp.next.data.number():
