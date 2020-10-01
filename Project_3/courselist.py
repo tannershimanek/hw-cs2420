@@ -237,4 +237,3 @@ class CourseList:
             current = current.next
             self.is_sorted_helper(current)
         return True
-

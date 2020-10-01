@@ -74,4 +74,3 @@ class Course:
         """returns a string representing a single Course."""
         return (f'cs{self.number()} {self.name()}'
                 + f' Grade: {self.grade()} Credit Hours: {self.credit_hr()}')
-
