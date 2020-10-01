@@ -1,5 +1,6 @@
 from recursioncounter import RecursionCounter
 
+
 class Node:
     """Construct a single node for a singly linked list."""
     def __init__(self, data=None, next=None):
@@ -8,7 +9,7 @@ class Node:
 
 
 class CourseList:
-    """Courselist implements a linked list to hold an UNLIMITED number of courses."""
+    """Courselist implements a linked list."""
 
     def __init__(self, head=None):
         """Initializes a singly linked list."""
@@ -39,7 +40,7 @@ class CourseList:
             gpa = self.calculate_gpa()
             courses = self.courselist
             size = self.size()
-            return f'Current List: ({size})\n{courses}\nCumulative GPA:{gpa}\n'
+            return f'Current List: ({size})\n{courses}\nCumulative GPA:{"%.3f"%gpa}\n'
 
     def __str__helper(self, current):
         """Handles the recursion for __str__.""" 
@@ -105,7 +106,7 @@ class CourseList:
 
     def get_middle(self, head):
         """Finds the middle of the linked list."""
-        if head is None:
+        if head == None:
             return head
 
         slow = head
@@ -159,7 +160,6 @@ class CourseList:
     def remove_all_helper(self, current, number):
         """Handles recursion for remove_all()"""
         _ = RecursionCounter()
-
         if current.next is not None:
             if current.next.data.number() == number:
                 current.next = current.next.next
@@ -178,7 +178,7 @@ class CourseList:
             return -1
 
         if current.data.number() == number:
-            return current
+            return current.data
         return self.find_helper(current.next, number)
 
     def size(self):
@@ -196,20 +196,24 @@ class CourseList:
     def calculate_gpa(self):
         """Returns the GPA using ALL courses in the list."""
         self.calculate_gpa_helper(self.head)
-        self.gpa = self.grade / self.credithrs
+        if self.credithrs != 0:
+            self.gpa = float(self.grade) / float(self.credithrs)
+        else:
+            return 0
         if self.gpa > 4:
             self.gpa = 4.000
-        elif self.gpa < 0:
+        elif self.gpa <= 0:
             self.gpa = 0.000
-        return f'{"%.3f"%self.gpa}'
+        return self.gpa
     
     def calculate_gpa_helper(self, current):
         """Helper function to calulate GPA."""
         _ = RecursionCounter()
         if current is not None:
-            self.grade += current.data.grade() * current.data.credit_hr()
-            self.credithrs += current.data.credit_hr()
-            self.calculate_gpa_helper(current.next)
+            if not isinstance(current.data.number(), str):
+                self.grade += current.data.grade() * current.data.credit_hr()
+                self.credithrs += current.data.credit_hr()
+                self.calculate_gpa_helper(current.next)
 
     def is_sorted(self):
         """Returns True of the list is sorted by course number, False if otherwise."""
@@ -228,12 +232,4 @@ class CourseList:
             current = current.next
             self.is_sorted_helper(current)
         return True
-
-
-
-
-
-
-
-
 
