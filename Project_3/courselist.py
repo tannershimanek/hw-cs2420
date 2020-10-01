@@ -1,3 +1,10 @@
+"""courselist.py
+
+This module creates data provided from ourse.py to create
+a linked list. Each method will has different job to manipulate
+the data in the linked list.
+"""
+
 from recursioncounter import RecursionCounter
 
 
@@ -27,8 +34,6 @@ class CourseList:
             item = self.head.data
             self.head = self.head.next
             return item
-        else:
-            raise StopIteration
 
     def __str__(self):
         """Returns a string with each course's data on a seperate line."""
@@ -43,7 +48,7 @@ class CourseList:
             return f'Current List: ({size})\n{courses}\nCumulative GPA:{"%.3f"%gpa}\n'
 
     def __str__helper(self, current):
-        """Handles the recursion for __str__.""" 
+        """Handles the recursion for __str__."""
         _ = RecursionCounter()
         if current.next is not None:
             self.courselist = self.courselist + str(current.data) + '\n'
@@ -87,7 +92,7 @@ class CourseList:
             result = b
             result.next = self.sorted_merge(a, b.next)
         return result
-    
+
     def merge_sort(self, h):
         """Uses the mergesort algorithm to sort the linked list."""
         _ = RecursionCounter()
@@ -106,7 +111,7 @@ class CourseList:
 
     def get_middle(self, head):
         """Finds the middle of the linked list."""
-        if head == None:
+        if head is None:
             return head
 
         slow = head
@@ -156,7 +161,7 @@ class CourseList:
         if self.head is not None:
             current = self.head
             self.remove_all_helper(current, number)
-        
+
     def remove_all_helper(self, current, number):
         """Handles recursion for remove_all()"""
         _ = RecursionCounter()
@@ -205,7 +210,7 @@ class CourseList:
         elif self.gpa <= 0:
             self.gpa = 0.000
         return self.gpa
-    
+
     def calculate_gpa_helper(self, current):
         """Helper function to calulate GPA."""
         _ = RecursionCounter()
@@ -218,10 +223,10 @@ class CourseList:
     def is_sorted(self):
         """Returns True of the list is sorted by course number, False if otherwise."""
         current = self.head
-        if current == None:
+        if current is None:
             return True
         return self.is_sorted_helper(current)
-    
+
     def is_sorted_helper(self, current):
         """Handles recursion for is_sorted()."""
         _ = RecursionCounter()
@@ -232,4 +237,3 @@ class CourseList:
             current = current.next
             self.is_sorted_helper(current)
         return True
-

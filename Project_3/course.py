@@ -1,4 +1,12 @@
+"""Course.py.
+
+This module retrieves the needed information for course.py. The __init__
+method makes sure to validate all information passed in.
+"""
+
+
 class Course:
+    """Retreves data for course.py."""
 
     def __init__(self, class_number=0, class_name='',
                  class_credit_hrs=0.0, class_grade=0.0):
@@ -66,4 +74,3 @@ class Course:
         """returns a string representing a single Course."""
         return (f'cs{self.number()} {self.name()}'
                 + f' Grade: {self.grade()} Credit Hours: {self.credit_hr()}')
-
