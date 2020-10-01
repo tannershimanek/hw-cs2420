@@ -18,6 +18,39 @@ class CourseList:
         self.credithrs = 0.0
         self.gpa = 0.0
 
+    def __iter__(self):
+        return self
+
+    def __next__(self):
+        if self.head is not None:
+            item = self.head.data
+            self.head = self.head.next
+            return item
+        else:
+            raise StopIteration
+
+    def __str__(self):
+        """Returns a string with each course's data on a seperate line."""
+        self.courselist = ''
+        if self.head is None:
+            return 'The linked list is empty.'
+        else:
+            self.__str__helper(self.head)
+            gpa = self.calculate_gpa()
+            courses = self.courselist
+            size = self.size()
+            return f'Current List: ({size})\n{courses}\nCumulative GPA:{gpa}\n'
+
+    def __str__helper(self, current):
+        """Handles the recursion for __str__.""" 
+        _ = RecursionCounter()
+        if current.next is not None:
+            self.courselist = self.courselist + str(current.data) + '\n'
+            self.__str__helper(current.next)
+        elif current.next is None:
+            self.courselist = self.courselist + str(current.data) + '\n'
+            return self.courselist
+
     def insert(self, Course):
         """Insert the specified course by course number in ascending order."""
         newNode = Node(Course)
@@ -45,6 +78,7 @@ class CourseList:
             return b
         if b is None:
             return a
+
         if a.data.number() <= b.data.number():
             result = a
             result.next = self.sorted_merge(a.next, b)
@@ -58,11 +92,14 @@ class CourseList:
         _ = RecursionCounter()
         if h is None or h.next is None:
             return h
+
         middle = self.get_middle(h)
         nexttomiddle = middle.next
         middle.next = None
+
         left = self.merge_sort(h)
         right = self.merge_sort(nexttomiddle)
+
         sortedlist = self.sorted_merge(left, right)
         return sortedlist
 
@@ -70,6 +107,7 @@ class CourseList:
         """Finds the middle of the linked list."""
         if head is None:
             return head
+
         slow = head
         fast = head
         return self.get_middle_helper(slow, fast)
@@ -106,25 +144,28 @@ class CourseList:
 
     def remove_all(self, number):
         """Removes ALL occurances of the specified course."""
-        
+        _ = RecursionCounter()
         if self.head is None:
             return None
-        
-        while self.head is not None and self.head.data.number() == number:
+
+        if self.head is not None and self.head.data.number() == number:
             self.head = self.head.next
-        
+            self.remove_all(number)
+
         if self.head is not None:
             current = self.head
-            while current.next is not None:
-                if current.next.data.number() == number:
-                    current.next = current.next.next
-                else:
-                    current = current.next
+            self.remove_all_helper(current, number)
         
-    def remove_all_helper(self, current, data):
+    def remove_all_helper(self, current, number):
         """Handles recursion for remove_all()"""
         _ = RecursionCounter()
-        pass
+
+        if current.next is not None:
+            if current.next.data.number() == number:
+                current.next = current.next.next
+            else:
+                current = current.next
+            self.remove_all_helper(current, number)
 
     def find(self, number):
         """Finds the first occurance of the specified course in the list or returns -1."""
@@ -135,6 +176,7 @@ class CourseList:
         _ = RecursionCounter()
         if not current:
             return -1
+
         if current.data.number() == number:
             return current
         return self.find_helper(current.next, number)
@@ -154,21 +196,20 @@ class CourseList:
     def calculate_gpa(self):
         """Returns the GPA using ALL courses in the list."""
         self.calculate_gpa_helper(self.head)
-        return f'Cumulative GPA: {"%.3f"%self.gpa}'
+        self.gpa = self.grade / self.credithrs
+        if self.gpa > 4:
+            self.gpa = 4.000
+        elif self.gpa < 0:
+            self.gpa = 0.000
+        return f'{"%.3f"%self.gpa}'
     
     def calculate_gpa_helper(self, current):
         """Helper function to calulate GPA."""
         _ = RecursionCounter()
-        if current.next is not None:
-            self.grade = self.grade + current.data.grade() * current.data.credit_hr()
-            self.credithrs = self.credithrs + current.data.credit_hr()
+        if current is not None:
+            self.grade += current.data.grade() * current.data.credit_hr()
+            self.credithrs += current.data.credit_hr()
             self.calculate_gpa_helper(current.next)
-        elif current.next is None:
-            self.gpa = self.grade / self.credithrs
-            if self.gpa > 4:
-                self.gpa = 4.000
-            elif self.gpa < 0:
-                self.gpa = 0.000
 
     def is_sorted(self):
         """Returns True of the list is sorted by course number, False if otherwise."""
@@ -188,35 +229,9 @@ class CourseList:
             self.is_sorted_helper(current)
         return True
 
-    def __str__(self):
-        """Returns a string with each course's data on a seperate line."""
-        self.courselist = ''
-        if self.head is None:
-            return 'The linked list is empty.'
-        else:
-            self.__str__helper(self.head)
-            return f'Current List: ({self.size()}) \n{self.courselist}'
 
-    def __str__helper(self, current):
-        """Handles the recursion for __str__.""" 
-        _ = RecursionCounter()
-        if current.next is not None:
-            self.courselist = self.courselist + str(current.data) + '\n'
-            self.__str__helper(current.next)
-        elif current.next is None:
-            self.courselist = self.courselist + str(current.data) + '\n'
-            return self.courselist
 
-    def __iter__(self):
-        return self
 
-    def __next__(self):
-        if self.head is not None:
-            item = self.head.data
-            self.head = self.head.next
-            return item
-        else:
-            raise StopIteration
 
 
 
