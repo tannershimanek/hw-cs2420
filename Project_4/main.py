@@ -9,11 +9,13 @@ from stack import Stack
 
 
 def isOperator(char):
+    """Check if parameter is an operator."""
     OPERATORS = '+-*/'
     return char in OPERATORS
 
 
 def getPrecedence(c):
+    """Return the precedence of the paramater."""
     result = 0
     OPERATORS = '+-*/'
     for char in OPERATORS:
@@ -26,6 +28,9 @@ def getPrecedence(c):
 
 
 def in2post(expr):
+    """Convert infix expression to postfix expression."""
+    # TODO if invalid infix.. raise a SyntaxError
+    # TODO if a non-string.. raise ValueError
     infix = ''
     postfix = ''
     stack = Stack()
@@ -36,7 +41,13 @@ def in2post(expr):
             postfix += char
         elif isOperator(char):
             while True:
-                topChar = stack.top()
+
+                if stack.size() != 0:
+                    topChar = stack.top()
+                else:
+                    topChar = None
+                    
+                # topChar = stack.top()
                 if stack.isEmpty() or topChar == '(':
                     stack.push(char)
                     break
@@ -66,11 +77,14 @@ def in2post(expr):
 
 
 def eval_postfix(expr):
+    # TODO if invalid postfix.. raise a SyntaxError
+    # TODO if a non-string.. raise ValueError
+    # return result
     pass
 
 
 def main():
-
+    # TODO CLEAN UP
     print('\n\n **************************** \n\n')
 
 
@@ -85,6 +99,33 @@ def main():
 
 
 main()
+
+
+
+
+
+
+def stack_testing():
+    """Use this function for testing the stack and main functions.
+
+    - Test eval_postfix() for invalid postfix.
+    - Test eval_postfix() for non-string parameters.
+
+    - Test in2post() for invalid infix expressions.
+    - Test in2post() for non string parameters.
+
+    - Test Stack() for empty scenarios.
+    - Test Stack() for clearing the stack.
+    NOTE: REMEMBER TO COMMENT OUT main() while testing.
+    """
+    stack = Stack()
+    infix_pass = '8*(5+3)'
+    infix_fail_1 = '8*(5+3))'
+    infix_fail_2 = 8*8
+    postfix_pass = '853+*'
+    postfix_fail_1 = '8*5'
+    postfix_fail_2 = 8*5
+
 
 
 
@@ -107,3 +148,5 @@ main()
 """ postfix expression """
 # https://runestone.academy/runestone/books/published/pythonds/BasicDS/InfixPrefixandPostfixExpressions.html
 # https://stackoverflow.com/questions/42703422/infix-to-postfix-algorithm-in-python
+
+""" evaluation postfix """
