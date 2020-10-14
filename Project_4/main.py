@@ -8,6 +8,9 @@ Date: October 10, 2020
 from stack import Stack
 
 
+output = ''
+
+
 def isOperator(char):
     """Check if parameter is an operator."""
     OPERATORS = '+-*/'
@@ -43,7 +46,6 @@ def valid_infix(expr):
     """Return True if the expression is a valid infix, if not raise SyntaxError."""
     left_bracket = 0
     right_bracket = 0
-
     for char in expr.replace(" ", ""):
         if char == '(':
             left_bracket += 1
@@ -59,14 +61,53 @@ def valid_infix(expr):
         raise
 
 
+def valid_postfix(expr):
+    """Returns True if a valid postfix, raises SyntaxError if not valid."""
+    expr_list =  [char for char in expr]
+    length_of_list = len(expr_list)
+    try:
+        if length_of_list > 1:
+            try:
+                if not isOperator(expr_list[0]) and not isOperator(expr_list[1]):
+                    elem_1 = expr_list[0]
+                    elem_2 = expr_list[1]
+                else:
+                    raise SyntaxError('Not a valid postfix expression.')
+            except SyntaxError as err:
+                print(err)
+                raise
+            try:
+                if isOperator(expr_list[-1]):
+                    return True
+                else:
+                    raise SyntaxError('Not a valid postfix expression.')
+            except SyntaxError as err:
+                print(err)
+                raise
+        elif length_of_list == 1:
+            try:
+                if not isOperator(expr_list[0]):
+                    return True
+                else:
+                    raise SyntaxError('Not a valid postfix expression.')
+            except SyntaxError as err:
+                print(err)
+                raise
+        elif length_of_list < 1:
+            raise SyntaxError('Not a valid postfix expression.')
+    except SyntaxError as err:
+        print(err)
+        raise
+
+
 def in2post(expr):
     """Convert infix expression to postfix expression."""
+    global output
     infix = ''
     postfix = ''
     stack = Stack()
     valid_param = False
 
-    # Check for valid parameters
     if expr_is_string(expr):
         valid_param = True
         if valid_infix(expr):
@@ -111,38 +152,59 @@ def in2post(expr):
             pop = stack.pop()
             postfix += pop
 
-        print(f'infix: {infix}')
-        print(f'postfix: {postfix} \n')
+        output += f'infix: {infix}\n'
+        output += f'postfix: {postfix} \n'
     return postfix
 
 
 def eval_postfix(expr):
-    # TODO if invalid postfix.. raise a SyntaxError
-    # TODO if a non-string.. raise ValueError
-    # return result
-    pass
+    """Evaluates the postfix parameter and returns the solution."""
+    global output
+    valid_param = False
+    stack = Stack()
+
+    if expr_is_string(expr):
+        valid_param = True
+        if valid_postfix(expr):
+            valid_param = True
+        else:
+            valid_param = False
+    else:
+        valid_param = False
+
+    if valid_param is True:
+        for char in expr.replace(" ", ""):
+            if char in '0123456789':
+                stack.push(char)
+            elif isOperator(char):
+                right = stack.pop()
+                left = stack.pop()
+                if char == '*':
+                    ans = lambda left, right: (float(left) * float(right))
+                    stack.push(ans(left, right))
+                elif char == '/':
+                    ans = lambda left, right: (float(left) / float(right))
+                    stack.push(ans(left, right))
+                elif char == '+':
+                    ans = lambda left, right: (float(left) + float(right))
+                    stack.push(ans(left, right))
+                elif char == '-':
+                    ans = lambda left, right: (float(left) - float(right))
+                    stack.push(ans(left, right))
+    answer = stack.pop()
+    output += f'answer: {answer}\n\n'
+    return answer
 
 
 def main():
-    # TODO CLEAN UP
-    print('\n\n **************************** \n\n')
-
-
     file = open('data.txt', 'r')
     lines = file.readlines()
     for line in lines:
-        in2post(line.replace('\n', ''))
-
-
-
-    print('\n\n **************************** \n\n')
+        eval_postfix(in2post(line.replace('\n', '')))
+    print(output)
 
 
 main()
-
-
-
-
 
 
 def stack_testing():
@@ -160,36 +222,26 @@ def stack_testing():
     NOTE: REMOVE BEFORE SUBMISSION.
     """
     stack = Stack()
-    infix_pass = '8*(5+3)'
-    infix_fail_1 = '8*(5+3))'
-    infix_fail_2 = 8*8
+    # infix_pass = '8*(5+3)'
+    # infix_fail_1 = '8*(5+3))'
+    # infix_fail_2 = 8*8
     postfix_pass = '853+*'
-    postfix_fail_1 = '8*5'
+    # postfix_fail_1 = '8*5'
     postfix_fail_2 = 8*5
 
-    # expr_is_string(10)
     # print(valid_infix(infix_fail_1))
+    # print(eval_postfix(postfix_fail_2))
+    print(valid_postfix(postfix_pass))
+
+    # stack.push(5)
+    # stack.push(10)
+    # l = stack.pop()
+    # r = stack.pop()
+    # print(l * r)
+
+    # pf = '79*7+56*-3+4-'
+    # eval_postfix(pf)
 
 
 
-stack_testing()
-
-""" TODO """
-# 1. open file data.txt.
-# 2. read infix expression from the file.
-# 3. display the infix expression.
-# 4. call function in2post(expr) which takes an infix expression as an
-#    input and returns an equivalent postfix expression as a string. 
-#    Raise ValueError if the parameter expr is not a string.
-# 5. display the postfix expression.
-# 6. call function eval_postfix(expr) whihc take a postfix string as an
-#    input and returns a number. Raise SyntaxError if the expression is not valid.
-# 7. display the result of eval_postfix()
-
-
-
-""" postfix expression """
-# https://runestone.academy/runestone/books/published/pythonds/BasicDS/InfixPrefixandPostfixExpressions.html
-# https://stackoverflow.com/questions/42703422/infix-to-postfix-algorithm-in-python
-
-""" evaluation postfix """
+# stack_testing()
