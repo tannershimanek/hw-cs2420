@@ -27,52 +27,92 @@ def getPrecedence(c):
     return result
 
 
+def expr_is_string(expr):
+    """Return True if expression is string type, if not raise ValueError."""
+    try:
+        if type(expr) is str:
+            return True
+        else:
+            raise ValueError('Expression is not a string.')
+    except ValueError as err:
+        print(err)
+        raise
+
+
+def valid_infix(expr):
+    """Return True if the expression is a valid infix, if not raise SyntaxError."""
+    left_bracket = 0
+    right_bracket = 0
+
+    for char in expr.replace(" ", ""):
+        if char == '(':
+            left_bracket += 1
+        elif char == ')':
+            right_bracket += 1
+    try:
+        if left_bracket == right_bracket:
+            return True
+        else:
+            raise SyntaxError('Invalid infix expression.')
+    except SyntaxError as err:
+        print(err)
+        raise
+
+
 def in2post(expr):
     """Convert infix expression to postfix expression."""
-    # TODO if invalid infix.. raise a SyntaxError
-    # TODO if a non-string.. raise ValueError
     infix = ''
     postfix = ''
     stack = Stack()
+    valid_param = False
 
-    for char in expr.replace(" ", ""):
-        infix += char
-        if char in '0123456789':
-            postfix += char
-        elif isOperator(char):
-            while True:
+    # Check for valid parameters
+    if expr_is_string(expr):
+        valid_param = True
+        if valid_infix(expr):
+            valid_param = True
+        else:
+            valid_param = False
+    else:
+        valid_param = False
 
-                if stack.size() != 0:
-                    topChar = stack.top()
-                else:
-                    topChar = None
-                    
-                # topChar = stack.top()
-                if stack.isEmpty() or topChar == '(':
-                    stack.push(char)
-                    break
-                else:
-                    charPrecedence = getPrecedence(char)
-                    topCharPrecedence = getPrecedence(topChar)
-                    if charPrecedence > topCharPrecedence:
+    if valid_param is True:
+        for char in expr.replace(" ", ""):
+            infix += char
+            if char in '0123456789':
+                postfix += char
+            elif isOperator(char):
+                while True:
+                    if stack.size() != 0:
+                        topChar = stack.top()
+                    else:
+                        topChar = None
+
+                    if stack.isEmpty() or topChar == '(':
                         stack.push(char)
                         break
                     else:
-                        postfix += stack.pop()
-        elif char == '(':
-            stack.push(char)
-        elif char == ')':
-            pop = stack.pop()
-            while pop != '(':
-                postfix += pop
+                        charPrecedence = getPrecedence(char)
+                        topCharPrecedence = getPrecedence(topChar)
+                        if charPrecedence > topCharPrecedence:
+                            stack.push(char)
+                            break
+                        else:
+                            postfix += stack.pop()
+            elif char == '(':
+                stack.push(char)
+            elif char == ')':
                 pop = stack.pop()
+                while pop != '(':
+                    postfix += pop
+                    pop = stack.pop()
 
-    while not stack.isEmpty():
-        pop = stack.pop()
-        postfix += pop
+        while not stack.isEmpty():
+            pop = stack.pop()
+            postfix += pop
 
-    print(f'infix: {infix}')
-    print(f'postfix: {postfix} \n')
+        print(f'infix: {infix}')
+        print(f'postfix: {postfix} \n')
     return postfix
 
 
@@ -117,6 +157,7 @@ def stack_testing():
     - Test Stack() for empty scenarios.
     - Test Stack() for clearing the stack.
     NOTE: REMEMBER TO COMMENT OUT main() while testing.
+    NOTE: REMOVE BEFORE SUBMISSION.
     """
     stack = Stack()
     infix_pass = '8*(5+3)'
@@ -126,10 +167,12 @@ def stack_testing():
     postfix_fail_1 = '8*5'
     postfix_fail_2 = 8*5
 
+    # expr_is_string(10)
+    # print(valid_infix(infix_fail_1))
 
 
 
-
+stack_testing()
 
 """ TODO """
 # 1. open file data.txt.
