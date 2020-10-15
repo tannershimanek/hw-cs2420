@@ -137,9 +137,10 @@ class TestMainOutput(unittest.TestCase):
         mn()
         sys.stdout = sys.__stdout__
         data = "".join(captured_output.getvalue().split())
-
+        # self.maxDiff = None
         data1 = "infix: 4postfix:  4answer: 4.0infix: 5  +7postfix:  5 7 +answer: 12.0infix: 7*5postfix:  7 5 *answer: 35.0infix: (5-3)postfix:  5 3 -answer: 2.0infix: 5/5postfix:  5 5 /answer: 1.0infix: 8*5+3postfix:  8 5 * 3 +answer: 43.0infix: 8*(5+3)postfix:  8 5 3 + *answer: 64.0infix: 8+3*5-7postfix:  8 3 5 * + 7 -answer: 16.0infix: (8+3)*(5-6)postfix:  8 3 + 5 6 - *answer: -11.0infix: ((8+3)*(2-7))postfix:  8 3 + 2 7 - *answer: -55.0infix: ((8+3)*2)-7postfix:  8 3 + 2 * 7 -answer: 15.0infix: (8*5)+((3-2)-7*3)postfix:  8 5 * 3 2 - 7 3 * - +answer: 20.0infix: ((8*5+3)-7)-(5*3)postfix:  8 5 * 3 + 7 - 5 3 * -answer: 21.0infix: 7*9+7-5*6+3-4postfix:  7 9 * 7 + 5 6 * - 3 + 4 -answer: 39.0".replace(" ","")
         self.assertEqual(data, data1)
+        
 
 class TestCodeingStandards(unittest.TestCase):
     def test_code_quality(self):

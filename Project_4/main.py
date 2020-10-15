@@ -7,17 +7,15 @@ Date: October 10, 2020
 
 from stack import Stack
 
+OUTPUT = '\n'
 
-output = ''
-
-
-def isOperator(char):
+def is_operator(char):
     """Check if parameter is an operator."""
     OPERATORS = '+-*/'
     return char in OPERATORS
 
 
-def getPrecedence(c):
+def get_precedence(c):
     """Return the precedence of the paramater."""
     result = 0
     OPERATORS = '+-*/'
@@ -63,12 +61,13 @@ def valid_infix(expr):
 
 def valid_postfix(expr):
     """Returns True if a valid postfix, raises SyntaxError if not valid."""
-    expr_list =  [char for char in expr]
+    parse = expr.replace(" ", "")
+    expr_list =  [char for char in parse]
     length_of_list = len(expr_list)
     try:
         if length_of_list > 1:
             try:
-                if not isOperator(expr_list[0]) and not isOperator(expr_list[1]):
+                if not is_operator(expr_list[0]) and not is_operator(expr_list[1]):
                     elem_1 = expr_list[0]
                     elem_2 = expr_list[1]
                 else:
@@ -77,16 +76,33 @@ def valid_postfix(expr):
                 print(err)
                 raise
             try:
-                if isOperator(expr_list[-1]):
+                op_count = 0
+                num_count = 0
+                for item in expr_list:
+                    if is_operator(item):
+                        op_count += 1
+                    else:
+                        num_count +=1
+                if num_count - 1 == op_count:
+                    num_count = 0
+                    op_count = 0
+                else:
+                    raise SyntaxError('Not a valid postfix expression.')
+            except SyntaxError as err:
+                print(err)
+                raise
+            try:
+                if is_operator(expr_list[-1]):
                     return True
                 else:
                     raise SyntaxError('Not a valid postfix expression.')
             except SyntaxError as err:
                 print(err)
                 raise
+
         elif length_of_list == 1:
             try:
-                if not isOperator(expr_list[0]):
+                if not is_operator(expr_list[0]):
                     return True
                 else:
                     raise SyntaxError('Not a valid postfix expression.')
@@ -102,8 +118,7 @@ def valid_postfix(expr):
 
 def in2post(expr):
     """Convert infix expression to postfix expression."""
-    global output
-    infix = ''
+    global OUTPUT
     postfix = ''
     stack = Stack()
     valid_param = False
@@ -119,23 +134,22 @@ def in2post(expr):
 
     if valid_param is True:
         for char in expr.replace(" ", ""):
-            infix += char
             if char in '0123456789':
                 postfix += char
-            elif isOperator(char):
+            elif is_operator(char):
                 while True:
                     if stack.size() != 0:
-                        topChar = stack.top()
+                        top_char = stack.top()
                     else:
-                        topChar = None
+                        top_char = None
 
-                    if stack.isEmpty() or topChar == '(':
+                    if stack.is_empty() or top_char == '(':
                         stack.push(char)
                         break
                     else:
-                        charPrecedence = getPrecedence(char)
-                        topCharPrecedence = getPrecedence(topChar)
-                        if charPrecedence > topCharPrecedence:
+                        char_precedence = get_precedence(char)
+                        top_char_precedence = get_precedence(top_char)
+                        if char_precedence > top_char_precedence:
                             stack.push(char)
                             break
                         else:
@@ -148,21 +162,20 @@ def in2post(expr):
                     postfix += pop
                     pop = stack.pop()
 
-        while not stack.isEmpty():
+        while not stack.is_empty():
             pop = stack.pop()
             postfix += pop
 
-        output += f'infix: {infix}\n'
-        output += f'postfix: {postfix} \n'
+        OUTPUT += f'infix: {expr}\n'
+        OUTPUT += f'postfix: {postfix}\n'
     return postfix
 
 
 def eval_postfix(expr):
     """Evaluates the postfix parameter and returns the solution."""
-    global output
+    global OUTPUT
     valid_param = False
     stack = Stack()
-
     if expr_is_string(expr):
         valid_param = True
         if valid_postfix(expr):
@@ -176,72 +189,33 @@ def eval_postfix(expr):
         for char in expr.replace(" ", ""):
             if char in '0123456789':
                 stack.push(char)
-            elif isOperator(char):
+            elif is_operator(char):
                 right = stack.pop()
                 left = stack.pop()
                 if char == '*':
-                    ans = lambda left, right: (float(left) * float(right))
-                    stack.push(ans(left, right))
+                    ans = float(left) * float(right)
+                    stack.push(ans)
                 elif char == '/':
-                    ans = lambda left, right: (float(left) / float(right))
-                    stack.push(ans(left, right))
+                    ans = float(left) / float(right)
+                    stack.push(ans)
                 elif char == '+':
-                    ans = lambda left, right: (float(left) + float(right))
-                    stack.push(ans(left, right))
+                    ans = float(left) + float(right)
+                    stack.push(ans)
                 elif char == '-':
-                    ans = lambda left, right: (float(left) - float(right))
-                    stack.push(ans(left, right))
+                    ans = float(left) - float(right)
+                    stack.push(ans)
     answer = stack.pop()
-    output += f'answer: {answer}\n\n'
-    return answer
+    OUTPUT += f'answer: {float(answer)}\n\n'
+    return float(answer)
 
 
 def main():
+    """Opens the file and reads lines, feeding data
+       into in2post() and eval_postfix()."""
     file = open('data.txt', 'r')
     lines = file.readlines()
     for line in lines:
-        eval_postfix(in2post(line.replace('\n', '')))
-    print(output)
-
+        eval_postfix(in2post(line.replace("\n", "")))
+    print(OUTPUT[:-1])
 
 main()
-
-
-def stack_testing():
-    """Use this function for testing the stack and main functions.
-
-    - Test eval_postfix() for invalid postfix.
-    - Test eval_postfix() for non-string parameters.
-
-    - Test in2post() for invalid infix expressions.
-    - Test in2post() for non string parameters.
-
-    - Test Stack() for empty scenarios.
-    - Test Stack() for clearing the stack.
-    NOTE: REMEMBER TO COMMENT OUT main() while testing.
-    NOTE: REMOVE BEFORE SUBMISSION.
-    """
-    stack = Stack()
-    # infix_pass = '8*(5+3)'
-    # infix_fail_1 = '8*(5+3))'
-    # infix_fail_2 = 8*8
-    postfix_pass = '853+*'
-    # postfix_fail_1 = '8*5'
-    postfix_fail_2 = 8*5
-
-    # print(valid_infix(infix_fail_1))
-    # print(eval_postfix(postfix_fail_2))
-    print(valid_postfix(postfix_pass))
-
-    # stack.push(5)
-    # stack.push(10)
-    # l = stack.pop()
-    # r = stack.pop()
-    # print(l * r)
-
-    # pf = '79*7+56*-3+4-'
-    # eval_postfix(pf)
-
-
-
-# stack_testing()

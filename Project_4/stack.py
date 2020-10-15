@@ -1,11 +1,13 @@
 """stack.py
 
 This module is an ADT for the stack. This stack does not
-have a size limit. In addition I added isEmpty() to easily
-check if the stack is empty.
+have a size limit. In addition I added is_empty() to easily
+check if the stack is empty and __str__() to get a string
+representation of the stack when needed.
 """
 
 class Stack:
+    """Creates a list with no limit to create a stack."""
 
     def __init__(self):
         self.items = []
@@ -18,7 +20,8 @@ class Stack:
         self.items.append(item)
 
     def pop(self):
-        """Remove the top item from the stack and return it. Raise an IndexError if the stack is empty."""
+        """Remove the top item from the stack and return it.
+           Raise an IndexError if the stack is empty."""
         try:
             if self.size() > 0:
                 top = self.top()
@@ -31,7 +34,8 @@ class Stack:
             raise
 
     def top(self):
-        """Return the item on top of the stack without removing it. Raise an IndexError if the stack is empty."""
+        """Return the item on top of the stack without removing it.
+           Raise an IndexError if the stack is empty."""
         try:
             if self.size() > 0:
                 return self.items[len(self.items) - 1]
@@ -48,8 +52,8 @@ class Stack:
     def clear(self):
         """Empty the stack."""
         self.items = []
-    
-    def isEmpty(self):
+
+    def is_empty(self):
         """Returns True if the stack is empty."""
         length = len(self.items)
         if length != 0:
