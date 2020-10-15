@@ -9,6 +9,7 @@ from stack import Stack
 
 OUTPUT = '\n'
 
+
 def is_operator(char):
     """Check if parameter is an operator."""
     OPERATORS = '+-*/'
