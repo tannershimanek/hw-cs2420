@@ -1,6 +1,7 @@
 """
 Author: Tanner Shimanek
 Date: October 23, 2020
+Description: Binary Search Tree ADT
 """
 
 from recursioncounter import RecursionCounter
@@ -19,13 +20,15 @@ class Node(object):
 
     def is_leaf(self):
         """Check if node has chldren."""
+        # FIXME make sure this works
         if self.left_child or self.right_child:
             return True
         else:
             return False
 
-    def update_height(self):
+    def update_height(self, a, b):
         """Update the height of the tree."""
+        # FIXME update height
         if self.left_child and self.right_child is None:
             self.height = -1
         elif self.left_child or self.right_child is not None:
@@ -40,12 +43,14 @@ class BinarySearchTree:
 
     def __str__(self):
         """Return a string that shows the shape of the tree."""
+        # FIXME
         if self.root is None:
             return None
         else:
             return self.__str__helper(self.root, 0)
     
     def __str__helper(self, node, level):
+        # FIXME
         """Handles recursion for the __str__() method."""
         RecursionCounter()
         output = ''
@@ -63,6 +68,7 @@ class BinarySearchTree:
     def _length_helper(self):
         """Handles recursion for the __len__() method."""
         RecursionCounter()
+        # FIXME i dont really need this
         pass
 
     def is_empty(self):
@@ -78,20 +84,20 @@ class BinarySearchTree:
         # increment size of tree
         self.size += 1
 
-    def _add_helper(self, cursor, data):
+    def _add_helper(self, cursor, item):
         """Handles recursion for the add() method."""
         RecursionCounter()      
-        if data < cursor.data:
+        if item < cursor.data:
             if cursor.left_child is None:
                 # add item to the left subtree
-                cursor.left_child = Node(data)
+                cursor.left_child = Node(item)
             else:
-                self._add_helper(cursor.left_child, data)
+                self._add_helper(cursor.left_child, item)
         elif cursor.right_child is None:
                 # add item to the right subtree
-            cursor.right_child = Node(data)
+            cursor.right_child = Node(item)
         else:
-            self._add_helper(cursor.right_child, data)
+            self._add_helper(cursor.right_child, item)
 
     def find(self, item):
         """Return the matched item. If the item is not in the tree returns None."""
@@ -112,25 +118,43 @@ class BinarySearchTree:
         pass
 
     def preorder(self):
-        """Return an iterator that performs a preorder traversal of the tree."""
-        lyst = list()
-        self._preorder_helper(self.root, lyst)
-
+        """Return a list that performs a preorder traversal of the tree."""
+        # root -> left -> right
+        output = list() # maybe define in __init__?
+        self._preorder_helper(self.root, output) 
+        print(output) # FIXME keep for now, remove later
 
     def _preorder_helper(self, cursor, output):
         """Handles recursion for the preorder() method."""
         RecursionCounter()
-        # list
         if cursor:
             # print(str(cursor.data) + ', ', end='')
-            self._preorder_helper(cursor.left_child, output.append(cursor.left_child))
-            self._preorder_helper(cursor.right_child, output.append(cursor.right_child))
-            print(output)
+            if len(output) == 0:
+                output.append(cursor.data)
 
-    def height(self):
+            if cursor.left_child is not None:
+                output.append(cursor.left_child.data)
+                self._preorder_helper(cursor.left_child, output)
+            elif cursor.left_child is None:
+                self._preorder_helper(cursor.left_child, output)
+            
+            if cursor.right_child is not None:
+                output.append(cursor.right_child.data)
+                self._preorder_helper(cursor.right_child, output)
+            elif cursor.right_child is None:
+                self._preorder_helper(cursor.right_child, output)
+
+    def height(self, node=None):
         """Return the the height of the tree."""
+        # TODO get height tree
+        return -1
         # retirn self.height from Node()
-        return self.root.height
+        # return self.root.update_height()
+        # node = self.root
+        # if node is None:
+        #     return -1
+
+        # return node.update_height(self.height(node.left_child), self.height(node.right_child)) + 1
 
 
     # def inorder(self):
@@ -142,3 +166,5 @@ class BinarySearchTree:
     #             recurse(node.right_child)
     #     recurse(self.root)
     #     return iter(lyst)
+
+
