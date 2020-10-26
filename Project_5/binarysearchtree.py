@@ -212,3 +212,16 @@ class BinarySearchTree:
     #     return iter(lyst)
 
 
+
+
+
+# ______ TODO ______ #
+
+# height()          []
+# remove()          []
+# length_helper     []
+# __str__()         []
+# update_height()   []
+# validation        []
+# testing           []
+# final clean up     []
