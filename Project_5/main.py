@@ -13,10 +13,13 @@ def main():
     for i in data:
         bst.add(i)
 
-
+    # testing
     print('length:', bst.__len__())
     print('height:', bst.height())
+    print('is empty:', bst.is_empty())
     bst.preorder()
+    print(bst.find(2)) # None if does not exist
+    # print(bst)
 
 main()
 

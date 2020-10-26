@@ -8,20 +8,22 @@ from recursioncounter import RecursionCounter
 
 
 class Node(object):
+    """Creates a node for a binary search tree."""
     def __init__(self, data, left_child=None, right_child=None):
         self.data = data
         self.left_child = left_child
         self.right_child = right_child
         self.height = -1 # standard for empty tree to be -1
-        # print(self.data)
 
     def __str__(self):
+        """Return a string type of the node."""
         return str(self.data)
 
     def is_leaf(self):
-        """Check if node has chldren."""
-        # FIXME make sure this works
-        if self.left_child or self.right_child:
+        """Check if node has chldren and return True or False."""
+        if self.data is None:
+            return False
+        if self.right_child is None and self.left_child is None:
             return True
         else:
             return False
@@ -40,6 +42,7 @@ class BinarySearchTree:
     def __init__(self):
         self.root = None
         self.size = 0
+        self.ordered_list = list()
 
     def __str__(self):
         """Return a string that shows the shape of the tree."""
@@ -60,10 +63,9 @@ class BinarySearchTree:
             output += str(node.data) + '\n'
             output += self.__str__helper(node.left_child, level + 1)
 
-
     def __len__(self):
         """Return the number of items in a list."""
-        return self.size
+        return self.size 
 
     def _length_helper(self):
         """Handles recursion for the __len__() method."""
@@ -101,28 +103,70 @@ class BinarySearchTree:
 
     def find(self, item):
         """Return the matched item. If the item is not in the tree returns None."""
-        pass
+        if self.root is None:
+            return None
+        else:
+            return self._find_helper(self.root, item)
 
     def _find_helper(self, cursor, item):
         """Handles recursion for the find() method."""
         RecursionCounter()
-        pass
+        try:
+            if cursor.data == item:
+                print(cursor.is_leaf())
+                return item
+            if self._find_helper(cursor.left_child, item):
+                return item
+            elif self._find_helper(cursor.right_child, item):
+                return item
+            else:
+                return None
+        except:
+            return None
 
     def remove(self, item):
         """Remove an item from the tree."""
-        pass
-
+        # when deleteing a node, remember it can only have at most one child
+        # FIXME
+        if self.root is None:
+            return self.root
+        else:
+            self._remove_helper(self.root, item)
+        
     def _remove_helper(self, cursor, item):
         """Handles recursion for the remove() method."""
         RecursionCounter()
-        pass
+        # if item < cursor.data:
+        #     cursor.left_child = self._remove_helper(cursor.left_child, item)
+        # elif item > cursor.data:
+        #     cursor.right_child = self._remove_helper(cursor.right_child, item)
+        # else:
+        #     if cursor.left_child is None:
+        #         temp = cursor.right_child
+        #         cursor = None
+        #         return temp
+        #     elif cursor.right_child is None:
+        #         temp = cursor.right_child
+        #         cursor = None
+        #         return temp
+            
+        #     temp = self._min_val(cursor.right_child)
+        #     cursor.data = temp.data
+        #     cursor.right_child = self._remove_helper(cursor.right_child, temp.data)
 
+    # def _min_val(self, cursor):
+    #     current = cursor
+    #     while current.right_child is not None:
+    #         current = current.left_child
+    #     return current
+    
     def preorder(self):
         """Return a list that performs a preorder traversal of the tree."""
         # root -> left -> right
-        output = list() # maybe define in __init__?
-        self._preorder_helper(self.root, output) 
-        print(output) # FIXME keep for now, remove later
+        # output = list() # maybe define in __init__? 
+        self.ordered_list = []
+        self._preorder_helper(self.root, self.ordered_list) 
+        print(self.ordered_list) # FIXME keep for now, remove later
 
     def _preorder_helper(self, cursor, output):
         """Handles recursion for the preorder() method."""
