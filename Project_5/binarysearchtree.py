@@ -42,7 +42,36 @@ class BinarySearchTree:
         self.ordered_list = list()
         self.output = ''
 
+    def __str__(self):
+        """Return a string that shows the shape of the tree."""
+        # FIXME 
+        self.output = ''
+        if self.root is None:
+            return None
+        else:
+            self.__str__helper(self.root)
+            return self.output
+    
+    def __str__helper(self, cursor):
+        # FIXME make it look pretty
+        """Handles recursion for the __str__() method."""
+        RecursionCounter()
 
+        if cursor:
+            if len(self.output) == 0:
+                self.output += str(cursor.data)
+
+            if cursor.left_child is not None:
+                self.output += str(cursor.left_child.data)
+                self.__str__helper(cursor.left_child)
+            elif cursor.left_child is None:
+                self.__str__helper(cursor.left_child)
+            
+            if cursor.right_child is not None:
+                self.output += str(cursor.right_child.data)
+                self.__str__helper(cursor.right_child)
+            elif cursor.right_child is None:
+                self.__str__helper(cursor.right_child)
 
     def __len__(self):
         """Return the number of items in a list."""
@@ -179,36 +208,7 @@ class BinarySearchTree:
             return -1
         return cursor.update_height(self._height_helper(cursor.left_child), self._height_helper(cursor.right_child)) + 1
 
-    def __str__(self):
-        """Return a string that shows the shape of the tree."""
-        # FIXME 
-        self.output = ''
-        if self.root is None:
-            return None
-        else:
-            self.__str__helper(self.root)
-            return self.output
-    
-    def __str__helper(self, cursor):
-        # FIXME make it look pretty
-        """Handles recursion for the __str__() method."""
-        RecursionCounter()
 
-        if cursor:
-            if len(self.output) == 0:
-                self.output += str(cursor.data)
-
-            if cursor.left_child is not None:
-                self.output += str(cursor.left_child.data)
-                self.__str__helper(cursor.left_child)
-            elif cursor.left_child is None:
-                self.__str__helper(cursor.left_child)
-            
-            if cursor.right_child is not None:
-                self.output += str(cursor.right_child.data)
-                self.__str__helper(cursor.right_child)
-            elif cursor.right_child is None:
-                self.__str__helper(cursor.right_child)
             
 
         
