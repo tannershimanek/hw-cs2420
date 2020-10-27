@@ -15,11 +15,12 @@ def main():
 
     # testing
     print('length:', bst.__len__())
-    print('height:', bst.height())
     print('is empty:', bst.is_empty())
-    bst.preorder()
+    print('height:', bst.height())
     print(bst.find(2)) # None if does not exist
-    # print(bst)
+    bst.preorder()
+    
+    print(bst)
 
 main()
 
