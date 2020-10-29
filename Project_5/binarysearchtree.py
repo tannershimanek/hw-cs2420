@@ -38,19 +38,34 @@ class Node(object):
 class BinarySearchTree:
     def __init__(self):
         self.root = None
-        self.size = 0
+        # self.size = 0
         self.ordered_list = list()
         self.output = ''
 
     def __str__(self):
         """Return a string that shows the shape of the tree."""
-        # FIXME 
         self.output = ''
+        final = ''
         if self.root is None:
             return None
-        else:
-            self.__str__helper(self.root)
-            return self.output
+        
+        self.__str__helper(self.root)
+        
+        def _str_formatter():
+            pass
+        
+        # FIXME do this in _str_formatter() recursively
+        level = self.height()
+        final += self.output + '\n'
+        final += str(self.root.data) + ' (' + str(level) + ') \n'
+        final += '\t' + str(self.root.left_child.data) + ' (' + str(level - 1) + ') \n'
+        final += '\t\t' + str(self.root.left_child.left_child.data) + ' (' + str(level - 2) + ') \n'
+        final += '\t\t\t' + str(self.root.left_child.left_child.left_child.data) + ' (' + str(level - 3) + ') \n'
+        final += '\t\t\t\t' + '[Empty] \n'
+        final += '\t\t\t\t' + str(self.root.left_child.left_child.left_child.right_child.data) + ' (' + str(level - 4) + ') [leaf] \n'
+        final += '\t\t\t' + str(self.root.left_child.left_child.right_child.data) + ' (' + str(level - 4) + ') [leaf] \n'
+
+        return final # return _str_formatter()
     
     def __str__helper(self, cursor):
         # FIXME make it look pretty
@@ -59,29 +74,36 @@ class BinarySearchTree:
 
         if cursor:
             if len(self.output) == 0:
-                self.output += str(cursor.data)
+                self.output += str(cursor.data) + ', '
 
             if cursor.left_child is not None:
-                self.output += str(cursor.left_child.data)
+                self.output += str(cursor.left_child.data) + ', '
                 self.__str__helper(cursor.left_child)
             elif cursor.left_child is None:
                 self.__str__helper(cursor.left_child)
             
             if cursor.right_child is not None:
-                self.output += str(cursor.right_child.data)
+                self.output += str(cursor.right_child.data) + ', '
                 self.__str__helper(cursor.right_child)
             elif cursor.right_child is None:
                 self.__str__helper(cursor.right_child)
 
     def __len__(self):
         """Return the number of items in a list."""
-        return self.size 
+        if self.root is None:
+            return 0
+        else:
+            return self._length_helper(self.root)
 
-    def _length_helper(self):
+    def _length_helper(self, cursor):
         """Handles recursion for the __len__() method."""
         RecursionCounter()
-        # FIXME i dont really need this
-        pass
+        if cursor is None:
+            return 0
+        else:
+            return (self._length_helper(cursor.left_child) \
+                 + 1 + self._length_helper(cursor.right_child))
+
 
     def is_empty(self):
         """Return True of empty, False if otherwise."""
@@ -93,8 +115,6 @@ class BinarySearchTree:
             self.root = Node(item)
         else:
             self._add_helper(self.root, item)
-        # increment size of tree
-        self.size += 1
 
     def _add_helper(self, cursor, item):
         """Handles recursion for the add() method."""
@@ -136,53 +156,81 @@ class BinarySearchTree:
 
     def remove(self, item):
         """Remove an item from the tree."""
-        # when deleteing a node, remember it can only have at most one child
-        # FIXME
+        # FIXME MAKE RECURSIVE
         if self.root is None:
-            return self.root
+            return None
         else:
             self._remove_helper(self.root, item)
-        
+                
     def _remove_helper(self, cursor, item):
         """Handles recursion for the remove() method."""
         RecursionCounter()
-        # if item < cursor.data:
-        #     cursor.left_child = self._remove_helper(cursor.left_child, item)
-        # elif item > cursor.data:
-        #     cursor.right_child = self._remove_helper(cursor.right_child, item)
-        # else:
-        #     if cursor.left_child is None:
-        #         temp = cursor.right_child
-        #         cursor = None
-        #         return temp
-        #     elif cursor.right_child is None:
-        #         temp = cursor.right_child
-        #         cursor = None
-        #         return temp
-            
-        #     temp = self._min_val(cursor.right_child)
-        #     cursor.data = temp.data
-        #     cursor.right_child = self._remove_helper(cursor.right_child, temp.data)
 
-    # def _min_val(self, cursor):
-    #     current = cursor
-    #     while current.right_child is not None:
-    #         current = current.left_child
-    #     return current
-    
+        def _lift_tree(top):
+            parent = top
+            currentNode = top.left_child
+            while not currentNode.right_child == None:
+                parent = currentNode
+                currentNode = currentNode.right_child
+            top.data = currentNode.data
+            if parent == top:
+                top.left_child = currentNode.left_child
+            else:
+                parent.right_child = currentNode.left_child
+        
+        if self.is_empty(): return None
+
+        itemRemoved = None
+        preRoot = Node(None)
+        preRoot.left_child = cursor
+        direction = 'left'
+        currentNode = cursor
+        while not currentNode == None:
+            if currentNode.data == item:
+                itemRemoved = currentNode.data
+                break
+            parent = currentNode
+            if currentNode.data > item:
+                direction = 'left'
+                currentNode = currentNode.left_child
+            else:
+                direction = 'right'
+                currentNode = currentNode.right_child
+            
+        if itemRemoved == None: return None
+
+        if not currentNode.left_child == None \
+            and not currentNode.right_child == None:
+            _lift_tree(currentNode)
+        else:
+            if currentNode.left_child == None:
+                newChild = currentNode.right_child
+            else:
+                newChild = currentNode.left_child
+            
+            if direction == 'left':
+                parent.left_child = newChild
+            else:
+                parent.right_child
+
+        if self.is_empty():
+            cursor = None
+        else:
+            cursor = preRoot.left_child
+        return itemRemoved
+
     def preorder(self):
         """Return a list that performs a preorder traversal of the tree."""
         # root -> left -> right
-        # output = list() # maybe define in __init__? 
         self.ordered_list = []
         self._preorder_helper(self.root, self.ordered_list) 
         print(self.ordered_list) # FIXME keep for now, change to return later
+        # return self.ordered_list
 
     def _preorder_helper(self, cursor, output):
         """Handles recursion for the preorder() method."""
         RecursionCounter()
         if cursor:
-            # print(str(cursor.data) + ', ', end='')
             if len(output) == 0:
                 output.append(cursor.data)
 
@@ -224,15 +272,14 @@ class BinarySearchTree:
 
 
 
-
-
 # ______ TODO ______ #
 
-# height()          [DONE]
-# remove()          []
-# length_helper     []
-# __str__()         [IN PROGRESS]
-# update_height()   [DONE]
-# validation        []
-# testing           []
-# final clean up     []
+# height()              [DONE]
+# remove()              [DONE]
+# remove()  recursion   [IN PROGRESS]
+# length_helper         [DONE]
+# __str__()             [IN PROGRESS]
+# update_height()       [DONE]
+# validation            []
+# testing               []
+# final clean up         []

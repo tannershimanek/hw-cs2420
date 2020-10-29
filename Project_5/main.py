@@ -19,6 +19,9 @@ def main():
     print('height:', bst.height())
     print(bst.find(2)) # None if does not exist
     bst.preorder()
+    bst.remove(10)
+    bst.preorder()
+    print('length:', bst.__len__())
     
     print(bst)
 
