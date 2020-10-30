@@ -1,53 +1,26 @@
 """
 Author: Tanner Shimanek
 Date: October 23, 2020
+Driver module for binarysearchtree.py.
 """
 
 from binarysearchtree import BinarySearchTree
-from binarysearchtree import Node
 
 
 def main():
+    """Driver function for a binary search tree."""
     bst = BinarySearchTree()
     data = [21,26,30,9,4,14,28,18,15,10,2,3,7]
     for i in data:
         bst.add(i)
 
-    # testing
-    print('length:', bst.__len__())
-    print('is empty:', bst.is_empty())
-    print('height:', bst.height())
-    print(bst.find(2)) # None if does not exist
+    print('21, 9, 4, 2, 3, 7, 14, 10, 18, 15, 26, 30, 28,')
     bst.preorder()
-    bst.remove(10)
-    bst.preorder()
-    print('length:', bst.__len__())
-    
+    print(bst)
+
+    data2 = [21,9,4,18,15,7]
+    for i in data2:
+        bst.remove(i)
     print(bst)
 
 main()
-
-
-
-
-
-
-
-
-
-
-
-
-
-# https://gist.github.com/jakemmarsh/8273963
-# https://stackoverflow.com/questions/5444394/how-to-implement-a-binary-search-tree-in-python
-# https://www.youtube.com/watch?v=lFq5mYUWEBk
-
-
-# https://levelup.gitconnected.com/beginners-guide-to-understanding-binary-search-trees-fd2be2b086a
-
-
-
-
-# https://www.youtube.com/watch?v=6oL-0TdVy28
-# https://github.com/vprusso/youtube_tutorials/blob/master/data_structures/trees/binary_trees/binary_tree_recursive_dfs_traversals.py

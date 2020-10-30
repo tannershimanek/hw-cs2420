@@ -13,6 +13,7 @@ class Node(object):
         self.data = data
         self.left_child = left_child
         self.right_child = right_child
+        self.height = 0
 
     def __str__(self):
         """Return a string type of the node."""
@@ -27,66 +28,71 @@ class Node(object):
         else:
             return False
 
-    def update_height(self, a, b):
-        """Update the height of the tree."""
-        if a >= b:
-            return a
-        else:
-            return b
+    def update_height(self):
+        """Update the height of the node."""
+        # FIXME
+        return self.height
 
 
 class BinarySearchTree:
     def __init__(self):
         self.root = None
-        # self.size = 0
         self.ordered_list = list()
         self.output = ''
 
     def __str__(self):
         """Return a string that shows the shape of the tree."""
-        self.output = ''
-        final = ''
         if self.root is None:
             return None
-        
-        self.__str__helper(self.root)
-        
-        def _str_formatter():
-            pass
-        
-        # FIXME do this in _str_formatter() recursively
         level = self.height()
-        final += self.output + '\n'
-        final += str(self.root.data) + ' (' + str(level) + ') \n'
-        final += '\t' + str(self.root.left_child.data) + ' (' + str(level - 1) + ') \n'
-        final += '\t\t' + str(self.root.left_child.left_child.data) + ' (' + str(level - 2) + ') \n'
-        final += '\t\t\t' + str(self.root.left_child.left_child.left_child.data) + ' (' + str(level - 3) + ') \n'
-        final += '\t\t\t\t' + '[Empty] \n'
-        final += '\t\t\t\t' + str(self.root.left_child.left_child.left_child.right_child.data) + ' (' + str(level - 4) + ') [leaf] \n'
-        final += '\t\t\t' + str(self.root.left_child.left_child.right_child.data) + ' (' + str(level - 4) + ') [leaf] \n'
-
-        return final # return _str_formatter()
+        self.output = ''
+        self.output += self.output + '\n'
+        self.output += str(self.root) + ' (' + str(level) + ')\n'
+        self.__str__helper(self.root, level)
+        return self.output
     
-    def __str__helper(self, cursor):
-        # FIXME make it look pretty
+    def __str__helper(self, cursor, level):
         """Handles recursion for the __str__() method."""
         RecursionCounter()
-
         if cursor:
-            if len(self.output) == 0:
-                self.output += str(cursor.data) + ', '
-
             if cursor.left_child is not None:
-                self.output += str(cursor.left_child.data) + ', '
-                self.__str__helper(cursor.left_child)
+                if cursor.left_child.is_leaf():
+                    self.output += str(cursor.left_child) + ' (' + str(level - 1) + ') [leaf]\n'
+                    self.output += '[Empty}\n'
+                    self.__str__helper(cursor.left_child, level - 1)
+                else:
+                    self.output += str(cursor.left_child) + ' (' + str(level - 1) + ')\n'
+                    self.__str__helper(cursor.left_child, level - 1)
             elif cursor.left_child is None:
-                self.__str__helper(cursor.left_child)
+                if not cursor.is_leaf():
+                    self.output += '[Empty]\n'
+                self.__str__helper(cursor.left_child, level - 1)
             
             if cursor.right_child is not None:
-                self.output += str(cursor.right_child.data) + ', '
-                self.__str__helper(cursor.right_child)
+                if cursor.right_child.is_leaf():
+                    self.output += str(cursor.right_child) + ' (' + str(level-1) + ') [leaf]\n'
+                    self.__str__helper(cursor.right_child, level-1)
+                else:
+                    self.output += str(cursor.right_child) + ' (' + str(level-1) + ')\n'
+                    self.__str__helper(cursor.right_child, level-1)
             elif cursor.right_child is None:
-                self.__str__helper(cursor.right_child)
+                self.__str__helper(cursor.right_child, level-1)
+
+        # if cursor:
+        #     if len(self.output) == 0:
+        #         self.output += str(cursor.data) + ', '
+
+        #     if cursor.left_child is not None:
+        #         self.output += str(cursor.left_child.data) + ', '
+        #         self.__str__helper(cursor.left_child)
+        #     elif cursor.left_child is None:
+        #         self.__str__helper(cursor.left_child)
+            
+        #     if cursor.right_child is not None:
+        #         self.output += str(cursor.right_child.data) + ', '
+        #         self.__str__helper(cursor.right_child)
+        #     elif cursor.right_child is None:
+        #         self.__str__helper(cursor.right_child)
 
     def __len__(self):
         """Return the number of items in a list."""
@@ -104,7 +110,6 @@ class BinarySearchTree:
             return (self._length_helper(cursor.left_child) \
                  + 1 + self._length_helper(cursor.right_child))
 
-
     def is_empty(self):
         """Return True of empty, False if otherwise."""
         return len(self) == 0
@@ -118,7 +123,7 @@ class BinarySearchTree:
 
     def _add_helper(self, cursor, item):
         """Handles recursion for the add() method."""
-        RecursionCounter()      
+        RecursionCounter()
         if item < cursor.data:
             if cursor.left_child is None:
                 # add item to the left subtree
@@ -224,8 +229,7 @@ class BinarySearchTree:
         # root -> left -> right
         self.ordered_list = []
         self._preorder_helper(self.root, self.ordered_list) 
-        print(self.ordered_list) # FIXME keep for now, change to return later
-        # return self.ordered_list
+        return self.ordered_list
 
     def _preorder_helper(self, cursor, output):
         """Handles recursion for the preorder() method."""
@@ -251,35 +255,26 @@ class BinarySearchTree:
         cursor = self.root
         return self._height_helper(cursor)
         
-    def _height_helper(self, cursor):   
+    def _height_helper(self, cursor):
+        """Handles recursion for height."""   
         if cursor is None:
             return -1
-        return cursor.update_height(self._height_helper(cursor.left_child), self._height_helper(cursor.right_child)) + 1
+        return self._update_height(self._height_helper(cursor.left_child), self._height_helper(cursor.right_child)) + 1
+    
+    def _update_height(self, a, b):
+        """Updates the height."""
+        if a >= b:
+            return a
+        else:
+            return b
 
 
-            
-
-
-    # def inorder(self):
-    #     lyst = list()
-    #     def recurse(node):
-    #         if node is not None:
-    #             recurse(node.left_child)
-    #             lyst.append(node.data)
-    #             recurse(node.right_child)
-    #     recurse(self.root)
-    #     return iter(lyst)
 
 
 
 # ______ TODO ______ #
 
-# height()              [DONE]
-# remove()              [DONE]
-# remove()  recursion   [IN PROGRESS]
-# length_helper         [DONE]
-# __str__()             [IN PROGRESS]
-# update_height()       [DONE]
-# validation            []
-# testing               []
-# final clean up         []
+# match test output             []
+# update_height                 [IN PROGRESS]
+# make remove() recursive       []
+# clean up / coding standards   []
