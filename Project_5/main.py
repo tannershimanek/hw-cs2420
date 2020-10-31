@@ -21,6 +21,8 @@ def main():
     data2 = [21,9,4,18,15,7]
     for i in data2:
         bst.remove(i)
+
+    bst.preorder()
     print(bst)
 
 main()
