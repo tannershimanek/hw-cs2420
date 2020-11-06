@@ -1,6 +1,6 @@
 """
 Author: Tanner Shimanek
-Date: October 23, 2020
+Date: November 5, 2020
 Driver module for binarysearchtree.py.
 """
 
@@ -18,11 +18,15 @@ def main():
     bst.preorder()
     print(bst)
 
-    data2 = [21,9,4,18,15,7]
-    for i in data2:
-        bst.remove(i)
+    # data2 = [21,9,4,18,15,7]
+    # for i in data2:
+    #     bst.remove(i)
 
-    bst.preorder()
-    print(bst)
+    # bst.preorder()
+    # print(bst)
+
+    print('inorder: ', bst.inorder())
+    print('Height: ', bst.height())
+    bst.rebalance_tree()
 
 main()

@@ -1,7 +1,7 @@
 """
 Author: Tanner Shimanek
-Date: October 23, 2020
-Description: Binary Search Tree ADT
+Date: November 5, 2020
+Description: Binary Search Tree ADT (part 2)
 """
 
 from recursioncounter import RecursionCounter
@@ -41,7 +41,8 @@ class BinarySearchTree:
     """Creates and manipulates a binary search tree."""
     def __init__(self):
         self.root = None
-        self.ordered_list = list()
+        self.preordered_list = list()
+        self.inordered_list = list()
         self.output = ''
 
     def __str__(self):
@@ -62,7 +63,7 @@ class BinarySearchTree:
                 if cursor.left_child.is_leaf():
                     self.output += (str(cursor.left_child)
                                     + ' (' + str(level - 1) + ') [leaf]\n')
-                    self.output += '[Empty}\n'
+                    self.output += '[Empty]\n'
                     self.__str__helper(cursor.left_child, level - 1)
                 else:
                     self.output += (str(cursor.left_child)
@@ -193,9 +194,9 @@ class BinarySearchTree:
     def preorder(self):
         """Return a list that performs a preorder traversal of the tree."""
         # root -> left -> right
-        self.ordered_list = []
-        self._preorder_helper(self.root, self.ordered_list)
-        return self.ordered_list
+        self.preordered_list = []
+        self._preorder_helper(self.root, self.preordered_list)
+        return self.preordered_list
 
     def _preorder_helper(self, cursor, output):
         """Handles recursion for the preorder() method."""
@@ -232,3 +233,21 @@ class BinarySearchTree:
             return -1
         return _update_height(self._height_helper(cursor.left_child) \
                              , self._height_helper(cursor.right_child)) + 1
+
+    def inorder(self):
+        """Returns a list that performs an inorder traversal of a tree."""
+        self.inordered_list = []
+        self._inorder_helper(self.root)
+        return self.inordered_list
+    
+    def _inorder_helper(self, cursor):
+        """Handles recursion for the inorder() method."""
+        RecursionCounter()
+        if cursor:
+            self._inorder_helper(cursor.left_child)
+            self.inordered_list.append(cursor) # maybe cursor.data idk yet
+            self._inorder_helper(cursor.right_child)
+        return self.inordered_list
+
+    def rebalance_tree(self):
+        print('TODO') # TODO
