@@ -38,12 +38,16 @@ class Node:
 
 
 class BinarySearchTree:
-    """Creates and manipulates a binary search tree."""
+    """Creates and manipulates a binary search tree. For every 5
+    nodes added or removed, the Binary Search tree will balance
+    itself.
+        """
     def __init__(self):
         self.root = None
         self.preordered_list = list()
         self.inordered_list = list()
         self.output = ''
+        self.new_list = list()
 
     def __str__(self):
         """Return a string that shows the shape of the tree."""
@@ -112,6 +116,9 @@ class BinarySearchTree:
             self.root = Node(item)
         else:
             self._add_helper(self.root, item)
+        # check if tree is balanced every 5 nodes added or removed
+        if self.__len__() % 5 == 0:
+            self._is_balanced()
 
     def _add_helper(self, cursor, item):
         """Handles recursion for the add() method."""
@@ -153,6 +160,9 @@ class BinarySearchTree:
             return None
         else:
             self._remove_helper(self.root, item)
+        # check if tree is balanced every 5 nodes added or removed
+        if self.__len__() % 5 == 0:
+            self._is_balanced()
 
     def _remove_helper(self, cursor, item):
         """Handles recursion for the remove() method."""
@@ -239,15 +249,72 @@ class BinarySearchTree:
         self.inordered_list = []
         self._inorder_helper(self.root)
         return self.inordered_list
-    
+
     def _inorder_helper(self, cursor):
         """Handles recursion for the inorder() method."""
         RecursionCounter()
         if cursor:
             self._inorder_helper(cursor.left_child)
-            self.inordered_list.append(cursor) # maybe cursor.data idk yet
+            self.inordered_list.append(cursor.data)
             self._inorder_helper(cursor.right_child)
-        return self.inordered_list
 
     def rebalance_tree(self):
-        print('TODO') # TODO
+        """Rebalance the binary search tree."""
+        self.new_list = []
+        self._rebalance_tree_helper(self.inorder())
+        self.new_list = [el for el in reversed(self.new_list)]
+        # clear the tree of the unordered nodes
+        self.root = None
+        def _build(lyst, index):
+            """Recursively rebuilds the tree."""
+            RecursionCounter()
+            if index < len(lyst):
+                self.add(lyst[index].data)
+                _build(lyst, index + 1)
+        # add ordered items to the tree
+        _build(self.new_list, 0)
+
+    def _rebalance_tree_helper(self, inorder_list):
+        """Handles recursion for the rebalence_tree() method."""
+        RecursionCounter()
+        if not inorder_list:
+            return None
+        middle = len(inorder_list) // 2
+        self.new_list.append(
+            Node(
+            data=inorder_list[middle],
+            left_child=self._rebalance_tree_helper(inorder_list[:middle]),
+            right_child=self._rebalance_tree_helper(inorder_list[middle + 1:])
+            ))
+
+    def _is_balanced(self):
+        """Checks if either the left side or the right side has
+        a difference greater than 3 nodes and rebalances the tree.
+        If the tree does not have a difference in 3 nodes the tree
+        will not change.
+        """
+        cursor = self.root
+
+        def _balance(cursor, counter):
+            """Recursively counts nodes on one side of the tree."""
+            RecursionCounter()
+            if not cursor:
+                return cursor
+            if cursor.left_child is not None:
+                counter += 1
+                _balance(cursor.left_child, counter)
+            if cursor.right_child is not None:
+                counter += 1
+                _balance(cursor.right_child, counter)
+            return int(counter)
+
+        if cursor.left_child is not None and cursor.right_child is not None:
+            left_count = _balance(cursor.left_child, 0)
+            right_count = _balance(cursor.right_child, 0)
+            difference = left_count - right_count
+            if difference > 3 or difference < -3:
+                self.rebalance_tree()
+            else:
+                return
+        else:
+            return
