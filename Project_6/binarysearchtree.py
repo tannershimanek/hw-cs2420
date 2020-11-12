@@ -294,7 +294,6 @@ class BinarySearchTree:
         will not change.
         """
         cursor = self.root
-
         def _balance(cursor, counter):
             """Recursively counts nodes on one side of the tree."""
             RecursionCounter()
