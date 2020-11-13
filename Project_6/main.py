@@ -34,11 +34,11 @@ def main():
     bst.remove(9)
     print(bst.rebalance_tree())
     print('Height: ', bst.height())
-    bst.display()
+    # bst.display()
     print('-=-=-')
     bst._is_balanced()
     print('------')
-    bst.display()
+    # bst.display()
     
 
 main()
