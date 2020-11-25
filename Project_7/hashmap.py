@@ -6,19 +6,20 @@ Description: Hashmap ADT
 
 
 class HashMap:
-    """Represents a hash based dictionary."""
+    """Represents a hashtable."""
 # 65536
     INITAL_NUM_OF_BUCKETS = 8
     
     def __init__(self):
-        self.num_of_buckets = 8 # change inital value to 8
+        self.num_of_buckets = 65536 # change inital value to 8
         self.map = [None] * self.num_of_buckets
         self.num_of_key_value_pairs = 0
+        self.list_of_keys =[None] # remove
         # print(self.map)
 
     def get(self, key, default=None):
         """ Returns the associated value if key exists. """
-        key_hash = self._hash(key)
+        key_hash = abs(hash(key)) % self.num_of_buckets
         if self.map[key_hash] is not None:
             for pair in self.map[key_hash]:
                 if pair[0] == key:
@@ -32,54 +33,27 @@ class HashMap:
         """ # load factor f = n / k
         
         self.num_of_key_value_pairs += 1 # increment size
-        key_hash = self._hash(key)
+        key_hash = abs(hash(key)) % self.num_of_buckets
         key_value_pair = [key, value]
 
         # print(key, key_hash)
 
         if self.map[key_hash] is None:
             self.map[key_hash] = list([key_value_pair])
+            return
         elif self.map[key_hash] is not None:
             for pair in self.map[key_hash]:
                 if pair[0] == key:
-                    pair[1] = self.get(key, value) + value
-                else:
-                    # self._find_new_index(key_hash)
-                    self.map[self._find_new_index(key_hash)] = list([key_value_pair])
-                self.map[key_hash].append(list(key_value_pair))
-                break
-
+                    pair[1] = self.get(key) + value
+                    break
+            self.map[key_hash].append(list(key_value_pair))
+            
+                
         # print(self.num_of_buckets)
-        print(self.num_of_key_value_pairs)
-
-        # if self.map[key_hash] is None: 
-        #     self.map[key_hash] = list([key_value_pair])
-        # elif self.map[key_hash] is not None:
-        #     # self.map[bucket][first kvp][first index of first kvp]
-        #     if self.map[key_hash][0][0] == key:
-        #         self.map[key_hash][0][1] = self.get(key, value) + 1
-        #         self.map[key_hash].append(list(key_value_pair))
-        #     else:
-        #         # find next empty index
-        #         self.map[self._find_new_index(key_hash)] = list([key_value_pair])
-
-        if (self.num_of_key_value_pairs / self.num_of_buckets) >= .8:
+        # print(self.num_of_key_value_pairs)
+        
+        if (self.num_of_key_value_pairs / self.num_of_buckets) * 100 >= 80:
             self.rehash()
-
-        # TODO: if the load-factor >= 80%, 
-        #       rehash the map into a map double its current capacity.
-
-    def _find_new_index(self, index):
-        while self.map[index] is not None:
-            index += 1
-            if index > self.num_of_buckets:
-                index = 0
-            else:
-                continue
-        return index
-
-    def _hash(self, item):
-        return abs(hash(item)) % self.num_of_buckets
     
     def clear(self):
         """ Empty the hasmap."""
@@ -108,12 +82,33 @@ class HashMap:
         new table shold be twice the capacity of the current table.
         typically this is internal use only."""
         # TODO: Shrink that docstring before submission
-        # load factor f = n / k
-        # if n / k >= .8:
-        for _ in range(0, self.num_of_buckets):
-            self.map.append(None)
+        temp = []
+        # add all non empty indexes to temp list
+
+        for x in range(0, len(self.map)):
+            if self.map[x] is not None:
+                self.map[x][0][1] = 1
+
+        # for index in self.map:
+        #     if index is not None:
+        #         temp.append(index)
+        self.keys()
+
+        # for j in range(0, len(self.map)):
+        #     self.map[j] = None
+        self.clear()
+
+        self.num_of_key_value_pairs = 0
         self.num_of_buckets = self.num_of_buckets * 2
 
+        for _ in range(0, self.num_of_buckets):
+            self.map.append(None)
+
+        for i in range(0, len(temp) -1):
+            for j in range(0, len(temp[i])):
+                key = temp[i][j][0]
+                value = temp[i][j][1]
+                self.set(key, value)
 
 
     # ----testing methods----
@@ -137,4 +132,3 @@ class HashMap:
   
 
 
-# https://coderbook.com/@marcus/how-to-create-a-hash-table-from-scratch-in-python/

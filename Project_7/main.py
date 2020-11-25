@@ -38,6 +38,7 @@ def main():
 
     # print('\n\n\n\n\n\n\n\n\n')
     # hm.display()
+    # hm.rehash()
     print('size:\t', hm.size())
     print('cap:\t', hm.capacity())
     print('the:\t', hm.get('the'))
@@ -47,6 +48,7 @@ def main():
     # print(testcounter) # remocve
 
     # write output to file for testing
+    
     hm.write()
 
 main()
@@ -54,10 +56,19 @@ main()
 
 
 def testing():
-    hashmap = [None]* 3
-    print(hashmap)
-    for _ in range( 0, 8):
-        hashmap.append(None)
-    print(hashmap)
+    # hashmap = [None]* 3
+    # print(hashmap)
+    # for _ in range( 0, 8):
+    #     hashmap.append(None)
+    # print(hashmap)
+    for _ in range(0, 40):
+        print(abs(hash('the')) % 8)
+        print(abs(hash('the')))
 
+    print(abs(hash('the')) % 16)
+    print(abs(hash('the')))
 # testing()
+
+
+
+### CHANGE VAR KEY_HASH TO HASH_KEY
