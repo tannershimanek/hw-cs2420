@@ -98,3 +98,4 @@ class TestCodeingStandards(unittest.TestCase):
 # https://coderbook.com/@marcus/how-to-create-a-hash-table-from-scratch-in-python/
 # https://github.com/joeyajames/Python/blob/master/HashMap.py
 # https://www.reddit.com/r/learnpython/comments/i5j97d/how_to_rebuild_a_hash_table_to_reduce_the_load/
+# https://howto.lintel.in/writing-shorthand-statements-in-python/

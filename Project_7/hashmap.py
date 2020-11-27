@@ -33,8 +33,6 @@ class HashMap:
         key_hash = abs(hash(key)) % self.num_of_buckets
         key_value_pair = [key, value]
 
-        # print(self.list_of_keys)
-
         if self.map[key_hash] is None:
             self.map[key_hash] = list([key_value_pair])
             return
@@ -45,7 +43,7 @@ class HashMap:
                     pair[1] = self.get(key) + value
                     break
             self.map[key_hash].append(list(key_value_pair))
-        
+
         # test load factor and rehash
         n = len(self.list_of_keys)
         if (n / self.num_of_buckets) >= .80:
@@ -63,22 +61,16 @@ class HashMap:
 
     def size(self):
         """Returns the number of key-value pairs in the map."""
-        return len(self.list_of_keys) -1
+        return len(self.list_of_keys) - 1
 
     def keys(self):
         """Return a list of keys in the hashmap."""
-        # list_of_keys = []
-        # for i in range(len(self.map)):
-        #     if self.map[i] is not None:
-        #         list_of_keys.append(self.map[i][0][0])
-        return self.list_of_keys
+        return self.list_of_keys[:-1]
 
     def rehash(self):
         """Rebuild the table to reduce the load factor. The
         new table shold be twice the capacity of the current table.
-        typically this is internal use only."""
-        # TODO: Shrink that docstring before submission
-
+        """
         self.clear()
         self.num_of_key_value_pairs = 0
         self.num_of_buckets = self.num_of_buckets * 2
@@ -95,9 +87,18 @@ class HashMap:
                         break
                 self.map[key_hash].append(list([key, 1]))
 
+    def hash_table(self):
+        """Returns the hash table."""
+        return self.map
 
 
-    # ----testing methods----
+
+
+
+
+
+
+    # /-------TESTING METHODS------/ #
     def display(self): #delete later / testing only
         print('-----HASHMAP-----')
         for item in self.map:
@@ -117,5 +118,3 @@ class HashMap:
         print('\t-----------MESSAGE-----------\n')
   
 
-    def get_list_of_keys(self):
-        return self.list_of_keys
