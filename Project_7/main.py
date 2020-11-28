@@ -52,37 +52,8 @@ def main():
         for line in file:
             for word in clean_line(line):
                 hm.set(word, 1)
-
-    # /-------TESTING------/ #
-    # print('size:\t', hm.size())
-    # print('cap:\t', hm.capacity())
-    # print('the:\t', hm.get('the'))
-    # print('alice:\t', hm.get('alice'))
-    # hm.write()
-
-    # /-------OUTPUT------/ #
     print('The most common words are:')
     get_most_used_words(hm)
 
 
 main()
-
-
-
-def testing():
-    # hashmap = [None]* 3
-    # print(hashmap)
-    # for _ in range( 0, 8):
-    #     hashmap.append(None)
-    # print(hashmap)
-    for _ in range(0, 40):
-        print(abs(hash('the')) % 8)
-        print(abs(hash('the')))
-
-    print(abs(hash('the')) % 16)
-    print(abs(hash('the')))
-# testing()
-
-
-
-### CHANGE VAR KEY_HASH TO HASH_KEY

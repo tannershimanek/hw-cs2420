@@ -25,8 +25,11 @@ class TestNominalMap(unittest.TestCase):
         hm = HashMap()
         keys = ["first", "second", "third", "fourth", "fifth", "sixth", "seventh", "eighth", "ninth", "tenth"]
         values = list(range(1, 11))
+        print(values)
         for i in range(len(keys)):
             hm.set(keys[i], values[i])
+        print(hm.keys())
+        # print(hm.get('sixth'))
         self.assertEqual(hm.get("sixth"), 6)
         self.assertNotEqual(hm.get("sixth"), 7)
         self.assertNotEqual(hm.get("sixth"), 5)
@@ -47,6 +50,7 @@ class TestRehash(unittest.TestCase):
         self.assertEqual(hm.size(), 5)
         self.assertEqual(hm.capacity(), 8)
         output = hm.keys()
+        # print(output) # -------
         self.assertEqual(len(output), 5)
         for key in output:
             self.assertIn(key, keys)

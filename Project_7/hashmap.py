@@ -9,7 +9,7 @@ class HashMap:
     """Represents a hashtable."""
 # 65536
     INITAL_NUM_OF_BUCKETS = 8
-    
+
     def __init__(self, num_of_buckets=8):
         self.num_of_buckets = num_of_buckets
         self.map = [None] * self.num_of_buckets
@@ -28,27 +28,24 @@ class HashMap:
         """Add the key value pair to the hashMap. if the
         load-factor >= 80%, rehash the map into a map double
         its current capacity.
-        """ 
+        """
         self.list_of_keys.append(key)
         key_hash = abs(hash(key)) % self.num_of_buckets
         key_value_pair = [key, value]
-
         if self.map[key_hash] is None:
             self.map[key_hash] = list([key_value_pair])
-            return
         elif self.map[key_hash] is not None:
             for pair in self.map[key_hash]:
                 # print(pair)
                 if pair[0] == key:
                     pair[1] = self.get(key) + value
                     break
-            self.map[key_hash].append(list(key_value_pair))
-
+                self.map[key_hash].append(list(key_value_pair))
         # test load factor and rehash
-        n = len(self.list_of_keys)
-        if (n / self.num_of_buckets) >= .80:
+        num = len(self.list_of_keys)
+        if (num / self.num_of_buckets) >= .80:
             self.rehash()
-    
+
     def clear(self):
         """ Empty the hashmap."""
         self.map = [None] * self.INITAL_NUM_OF_BUCKETS
@@ -65,14 +62,13 @@ class HashMap:
 
     def keys(self):
         """Return a list of keys in the hashmap."""
-        return self.list_of_keys[:-1]
+        return self.list_of_keys[1:]
 
     def rehash(self):
         """Rebuild the table to reduce the load factor. The
-        new table shold be twice the capacity of the current table.
+        new table will be twice the capacity of the current table.
         """
         self.clear()
-        self.num_of_key_value_pairs = 0
         self.num_of_buckets = self.num_of_buckets * 2
         self.map = [None] * self.num_of_buckets
 
@@ -90,31 +86,3 @@ class HashMap:
     def hash_table(self):
         """Returns the hash table."""
         return self.map
-
-
-
-
-
-
-
-
-    # /-------TESTING METHODS------/ #
-    def display(self): #delete later / testing only
-        print('-----HASHMAP-----')
-        for item in self.map:
-            if item is not None:
-                print(str(item))
-
-    def write(self):
-        test_file = open('testing.txt', 'w')
-        for item in self.map:
-            if item is not None:
-                test_file.write(str(item))
-                test_file.write('\n')
-        test_file.close()
-        
-        print('\n\t-----------MESSAGE-----------\n')
-        print('\t data printed in testing.txt\n')
-        print('\t-----------MESSAGE-----------\n')
-  
-
