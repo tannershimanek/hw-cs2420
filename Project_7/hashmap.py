@@ -7,7 +7,7 @@ Description: Hashmap ADT
 
 class HashMap:
     """Represents a hashtable."""
-# 65536
+
     INITAL_NUM_OF_BUCKETS = 8
 
     def __init__(self, num_of_buckets=8):
@@ -36,7 +36,6 @@ class HashMap:
             self.map[key_hash] = list([key_value_pair])
         elif self.map[key_hash] is not None:
             for pair in self.map[key_hash]:
-                # print(pair)
                 if pair[0] == key:
                     pair[1] = self.get(key) + value
                     break
