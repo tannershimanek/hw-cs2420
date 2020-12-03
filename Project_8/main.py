@@ -22,7 +22,7 @@ def main():
     g.add_edge('B', 'D', 15.0)
     g.add_edge('B', 'C', 8.0)
     g.add_edge('C', 'D', 1.0)
-    # g.add_edge('D', None, None)
+    g.add_edge('D', None, None)
     g.add_edge('E', 'C', 7.0)
     g.add_edge('E', 'D', 3.0)
     g.add_edge('F', 'E', 3.0)
