@@ -29,7 +29,7 @@ class Graph:
                 for vertex in self.graph:
                     vertex.append(0)
             temp = []
-            for i in range(self.num_vertices):
+            for _ in range(self.num_vertices):
                 temp.append(0)
             self.graph.append(temp)
 
