@@ -1,0 +1,10 @@
+# Default ignored files
+/shelf/
+/workspace.xml
+
+# Do not want these either
+inspectionProfiles/
+/vcs.xml
+/misc.xml
+/modules.xml
+/Project_8.xml

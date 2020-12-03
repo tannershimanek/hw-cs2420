@@ -5,28 +5,50 @@ Description: A graph ADT.
 """
 
 
-
 class Graph:
     """A python graph ADT."""
 
     def __init__(self):
-        pass
+        """Initialize Graph and vertices."""
+        self.graph = []
+        self.vertices = []
+        self.num_vertices = 0
 
-    def add_vertex(self, label):
+    def add_vertex(self, label: str):
         """add a vertex with the specified label.
         Return the graph. label must be a string or
         raise ValueError.
         """
-        print('TODO: add_vertex()')
-        return -1
+        # TODO: Validate label type(str)
+        if label in self.vertices:
+            print('Vertex ', label, "already exists.")
+        else:
+            self.num_vertices += 1
+            self.vertices.append(label)
+            if self.num_vertices > 1:
+                for vertex in self.graph:
+                    vertex.append(0)
+            temp = []
+            for i in range(self.num_vertices):
+                temp.append(0)
+            self.graph.append(temp)
 
     def add_edge(self, src, dest, w):
         """add an edge from vertex src to vertex dest
         with weight w. Return the graph. validate src,
         dest, and w: raise ValueError if not valid.
         """
-        print('TODO: add_edge()')
-        return None
+        # TODO: validate src
+        # TODO: validate dest
+        # TODO: validate w
+        if src not in self.vertices:
+            print('Vertex ', src, ' does not exist.')
+        elif dest not in self.vertices:
+            print('Vertex ', dest, ' does not exist')
+        else:
+            index1 = self.vertices.index(src)
+            index2 = self.vertices.index(dest)
+            self.graph[index1][index2] = w
 
     def get_weight(self, src, dest) -> float:
         """Return the weight on edge src-dest (math.inf
@@ -61,7 +83,7 @@ class Graph:
         empty list.)
         """
         print('TODO: dijkstra_shortest_path()')
-        return -1
+        return [None]
 
     def dijkstra_shortest_path_D(self, src) -> dict:
         """Return a dictionary of the shortest weighted
@@ -72,10 +94,19 @@ class Graph:
         the path from key back to src).
         """
         print('TODO: dijkstra_shortest_path()')
-        return -1
+        return {}
 
     def __str__(self):
         """Produce a string representation of the graph
         that can be used with print().
         """
-        print('TODO print graph')
+        return 'TODO: print graph'
+
+    # ------ TESTING METHODS ------ #
+
+    def display(self):
+        for i in range(self.num_vertices):
+            for j in range(self.num_vertices):
+                if self.graph[i][j] != 0:
+                    print(self.vertices[i], " -> ", self.vertices[j],
+                          " edge weight: ", self.graph[i][j])
