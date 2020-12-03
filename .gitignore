@@ -1,9 +1,9 @@
-# Don't track the contents of these folders
+# Don't track the contents of these folders.
 __pycache__/
 Other/
 inspectionProfiles/
 .idea/
 
-# I feel it is better to unpack these files
+# I feel it is better to unpack these files.
 *.zip
 *.xml
