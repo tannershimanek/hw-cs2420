@@ -4,7 +4,7 @@ Date: December 3, 2020
 Description: Driver Module for graph.py
 """
 from graph import Graph
-
+import math
 
 def main():
     """Driver function for graph.py."""
@@ -22,17 +22,21 @@ def main():
     g.add_edge('B', 'D', 15.0)
     g.add_edge('B', 'C', 8.0)
     g.add_edge('C', 'D', 1.0)
-    g.add_edge('D', None, None)
+    # g.add_edge('D', None, None)
     g.add_edge('E', 'C', 7.0)
     g.add_edge('E', 'D', 3.0)
     g.add_edge('F', 'E', 3.0)
 
     # Testing Methods
     g.display()
+    print(g.get_weight('A', 'B'))
+    # print(g)
+    # g.get_weight('A', 'G')
+    # g.display_vertices()
+    # g.display_graph()
     # print(g)
     # print(test_output())
     # print(test_output_single_vertex())
-
 
 # ------ TESTING FUNCTIONS ------ #
 

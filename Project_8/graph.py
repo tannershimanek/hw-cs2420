@@ -3,6 +3,11 @@ Author: Tanner Shimanek
 Date: December 1, 2020
 Description: A graph ADT.
 """
+import math
+
+
+def validate(arg, type):
+    pass
 
 
 class Graph:
@@ -19,7 +24,10 @@ class Graph:
         Return the graph. label must be a string or
         raise ValueError.
         """
-        # TODO: Validate label type(str)
+        # Confirm that label is string type
+        if not isinstance(label, str):
+            raise ValueError("Input must be a string.")
+
         if label in self.vertices:
             print('Vertex ', label, "already exists.")
         else:
@@ -34,29 +42,38 @@ class Graph:
             self.graph.append(temp)
 
     def add_edge(self, src, dest, w):
-        """add an edge from vertex src to vertex dest
+        """Add an edge from vertex src to vertex dest
         with weight w. Return the graph. validate src,
         dest, and w: raise ValueError if not valid.
         """
-        # TODO: validate src
-        # TODO: validate dest
         # TODO: validate w
+
         if src not in self.vertices:
-            print('Vertex ', src, ' does not exist.')
+            raise ValueError(f"Vertex {src} does not exist.")
         elif dest not in self.vertices:
-            print('Vertex ', dest, ' does not exist')
+            raise ValueError(f"Vertex {dest} does not exist.")
         else:
             index1 = self.vertices.index(src)
             index2 = self.vertices.index(dest)
             self.graph[index1][index2] = w
+        return self.graph  # FIXME this might go here
 
     def get_weight(self, src, dest) -> float:
         """Return the weight on edge src-dest (math.inf
         if no path exists, raise ValueError if src or
         dest not added to graph).
         """
-        print('TODO: get_weight()')
-        return -1
+        # 0 -> A, 1 -> B, 2 -> C
+        if src in self.vertices and dest in self.vertices:
+            src = self.vertices.index(src)
+            dest = self.vertices.index(dest)
+        else:
+            raise ValueError(f"{src} and {dest} must be added to graph.")
+        # TODO: check if path exists /// this might actually work idk
+        if self.graph[src][dest] > 0:
+            return self.graph[src][dest]
+        else:
+            return math.inf
 
     def dfs(self, starting_vertex):
         """Return a generator for traversing the graph
@@ -85,7 +102,7 @@ class Graph:
         print('TODO: dijkstra_shortest_path()')
         return [None]
 
-    def dijkstra_shortest_path_D(self, src) -> dict:
+    def dijkstra_shortest_path_D(self, src, dest) -> dict:
         """Return a dictionary of the shortest weighted
         path between src and all other vertices using
         Dijkstra's Shortest Path algorithm. In the
@@ -94,13 +111,18 @@ class Graph:
         the path from key back to src).
         """
         print('TODO: dijkstra_shortest_path()')
-        return {}
+        return {'None': 0}
 
     def __str__(self):
         """Produce a string representation of the graph
         that can be used with print().
         """
-        return 'TODO: print graph'
+        output = f"numVertices: {self.num_vertices}\n" \
+                 f"Vertex \t Adjacency List\n"
+        for i in range(self.num_vertices):
+            output += (self.vertices[i] + "\n")
+        # TODO: add adjacency list
+        return output
 
     # ------ TESTING METHODS ------ #
 
@@ -110,3 +132,13 @@ class Graph:
                 if self.graph[i][j] != 0:
                     print(self.vertices[i], " -> ", self.vertices[j],
                           " edge weight: ", self.graph[i][j])
+
+    def display_graph(self):
+        for i in range(self.num_vertices):
+            print(self.vertices[i], self.graph[i])
+
+    def display_vertices(self):
+        print(self.vertices)
+
+    def display_num_verties(self):
+        pass

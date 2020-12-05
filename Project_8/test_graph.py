@@ -139,3 +139,14 @@ class TestCodeingStandards(unittest.TestCase):
 
 
 # https://www.educative.io/edpresso/how-to-implement-a-graph-in-python
+
+
+""" TODO LIST """
+# add_vertex                            []
+# add_edge                              []
+# get_weight                            []
+# dfs                                   []
+# bfs                                   []
+# dijkstra_shortest_path (list)         []
+# dijkstra_shortest_path (dict)         []
+# __str__                               []
