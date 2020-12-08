@@ -139,14 +139,16 @@ class TestCodeingStandards(unittest.TestCase):
 
 
 # https://www.educative.io/edpresso/how-to-implement-a-graph-in-python
-
+# https://www.educative.io/edpresso/how-to-implement-depth-first-search-in-python
+# https://www.educative.io/edpresso/how-to-implement-a-breadth-first-search-in-python
+# https://icpc.global/worldfinals/problems
 
 """ TODO LIST """
-# add_vertex                            []
-# add_edge                              []
-# get_weight                            []
-# dfs                                   []
-# bfs                                   []
+# add_vertex                            [DONE]
+# add_edge                              [DONE]
+# get_weight                            [DONE]
+# dfs                                   [IN PROGRESS]
+# bfs                                   [IN PROGRESS]
 # dijkstra_shortest_path (list)         []
 # dijkstra_shortest_path (dict)         []
-# __str__                               []
+# __str__                               [DONE]

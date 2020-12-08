@@ -1,13 +1,13 @@
 """
 Author: Tanner Shimanek
 Date: December 3, 2020
-Description: Driver Module for graph.py
+Description: Driver Module for graph(BETA).py
 """
 from graph import Graph
 import math
 
 def main():
-    """Driver function for graph.py."""
+    """Driver function for graph(BETA).py."""
     g = Graph()
 
     # Add vertices
@@ -22,15 +22,21 @@ def main():
     g.add_edge('B', 'D', 15.0)
     g.add_edge('B', 'C', 8.0)
     g.add_edge('C', 'D', 1.0)
-    # g.add_edge('D', None, None)
+    # g.add_edge('D', 'E', 0)
     g.add_edge('E', 'C', 7.0)
     g.add_edge('E', 'D', 3.0)
     g.add_edge('F', 'E', 3.0)
 
     # Testing Methods
+    g.display_graph()
     g.display()
     print(g.get_weight('A', 'B'))
-    # print(g)
+    print(g.dfs('A'))
+    print(g.bfs('A'))
+    print(g)
+    # print(g.get_graph())
+    # print(g.dijkstra_shortest_path('A', 'C'))
+    # # print(g)
     # g.get_weight('A', 'G')
     # g.display_vertices()
     # g.display_graph()
