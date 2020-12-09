@@ -116,7 +116,7 @@ class Graph:
 
         while current_node != dest:
             visited.add(current_node)
-            destinations = self.vertices
+            destinations = self.graph
             weight_to_current_node = shortest_path[current_node][1]
 
             for next_node in destinations:
@@ -133,15 +133,15 @@ class Graph:
                                 for node in shortest_path if node not in visited}
 
             if not next_destination:
-                return "Route not possible."
+                return math.inf, []
             # next node is the destination with the lowest weight
             current_node = min(next_destination
                                , key=lambda k: next_destination[k][1])
-            path = []
-            while current_node is not None:
-                path.append(current_node)
-                next_node = shortest_path[current_node][0]
-                current_node = next_node
+        path = []
+        while current_node is not None:
+            path.append(current_node)
+            next_node = shortest_path[current_node][0]
+            current_node = next_node
 
             # reverse path
             # path = path[::-1]
@@ -192,3 +192,47 @@ class Graph:
 
     def get_graph(self):
         return self.graph
+
+
+
+    def dijkstra_shortest_path_eh(self, src, dest):
+        shortest_path = {src: (None, 0)}
+        current_node = src
+        visited = list()
+
+        while current_node != dest:
+            visited.append(current_node)
+            destinations = self.graph
+            weight_to_current_node = shortest_path[current_node][1]
+
+            for next_node in destinations:
+                weight = self.get_weight(current_node, next_node) \
+                         + weight_to_current_node
+                if next_node not in shortest_path:
+                    shortest_path[next_node] = (current_node, weight)
+                else:
+                    current_shortest_weight = shortest_path[next_node][1]
+                    if current_shortest_weight > weight:
+                        shortest_path[next_node] = (current_node, weight)
+
+            next_destination = {node: shortest_path[node]
+                                for node in shortest_path if node not in visited}
+
+            if not next_destination:
+                return math.inf, []
+            # next node is the destination with the lowest weight
+            current_node = min(next_destination, key=lambda k: next_destination[k][1])
+            # print(current_node)
+            print(next_destination)
+
+        path = []
+        while current_node is not None:
+            path.append(current_node)
+            next_node = shortest_path[current_node][0]
+            current_node = next_node
+
+        # reverse path
+        # path = path[::-1]
+        return weight_to_current_node, path
+        # print('TODO: dijkstra_shortest_path()')
+        # return path_length, [None]

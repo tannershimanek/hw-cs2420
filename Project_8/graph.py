@@ -24,10 +24,11 @@ class Graph:
             raise ValueError("Input must be a string.")
 
         if label in self.graph:
-            print('Vertex ', label, ' alrady exists.')
+            print('Vertex ', label, ' already exists.')
         else:
             self.num_vertices += 1
             self.graph[label] = []
+        return self
 
     def add_edge(self, src, dest, w):
         """Add an edge from vertex src to vertex dest
@@ -47,7 +48,7 @@ class Graph:
         else:
             temp = [dest, w]
             self.graph[src].append(temp)
-        return self.graph  # FIXME this might go here
+        return self
 
     def get_weight(self, src, dest) -> float:
         """Return the weight on edge src-dest (math.inf
@@ -63,8 +64,8 @@ class Graph:
                 return index[1]
             else:
                 # if dest does not exist in self.graph
-                # raise ValueError(f"{dest} must be added to graph.")
                 return math.inf
+        return math.inf
 
     def dfs(self, starting_vertex):
         """Return a generator for traversing the graph
@@ -72,14 +73,14 @@ class Graph:
         vertex. Raise a ValueError if the vertex does
         not exist.
         """
-        visited = set()
+        visited = list()
         self._dfs_helper(visited, starting_vertex)
-        # TODO: RETURN GENERATOR
+        return visited
 
     def _dfs_helper(self, visited, node):
         if node not in visited:
             print(node)  # remove later
-            visited.add(node)
+            visited.append(node)
             for neighbor in self.graph[node]:
                 self._dfs_helper(visited, neighbor[0])
 
@@ -98,7 +99,7 @@ class Graph:
                 if neighbor[0] not in visited:
                     visited.append(neighbor[0])
                     queue.append(neighbor[0])
-        # TODO: RETURN GENERATOR
+        return visited
 
     def dijkstra_shortest_path(self, src, dest) -> tuple:
         """ Return a tuple (path length , the list of
@@ -107,44 +108,10 @@ class Graph:
         empty list.)
         """
         # FIXME: idk make this work
-        # shortest_path = {src: (None, 0)}
-        # current_node = src
-        # visited = set()
-
-        # while current_node != dest:
-        #     visited.add(current_node)
-        #     destinations = self.vertices
-        #     weight_to_current_node = shortest_path[current_node][1]
-
-        #     for next_node in destinations:
-        #         weight = self.get_weight(current_node, next_node) \
-        #                  + weight_to_current_node
-        #         if next_node not in shortest_path:
-        #             shortest_path[next_node] = (current_node, weight)
-        #         else:
-        #             current_shortest_weight = shortest_path[next_node][1]
-        #             if current_shortest_weight > weight:
-        #                 shortest_path[next_node] = (current_node, weight)
-
-        #     next_destination = {node: shortest_path[node]
-        #                         for node in shortest_path if node not in visited}
-
-        #     if not next_destination:
-        #         return "Route not possible."
-        #     # next node is the destination with the lowest weight
-        #     current_node = min(next_destination
-        #                        , key=lambda k: next_destination[k][1])
-        #     path = []
-        #     while current_node is not None:
-        #         path.append(current_node)
-        #         next_node = shortest_path[current_node][0]
-        #         current_node = next_node
-
-            # reverse path
-            # path = path[::-1]
-            # return 8.0, path
-        # print('TODO: dijkstra_shortest_path()')
-        # return path_length, [None]
+        shortest_path = {src: (None, 0)}
+        current_node = src
+        visited = list()
+        return math.inf, []
 
     def dijkstra_shortest_path_D(self, src, dest) -> dict:
         """Return a dictionary of the shortest weighted
