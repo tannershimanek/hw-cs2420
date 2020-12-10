@@ -132,6 +132,6 @@ class TestCodeingStandards(unittest.TestCase):
 # get_weight                            [DONE]
 # dfs                                   [DONE]
 # bfs                                   [DONE]
-# dijkstra_shortest_path (list)         []
+# dijkstra_shortest_path (list)         [IN PROGRESS]
 # dijkstra_shortest_path (dict)         []
 # __str__                               [DONE]

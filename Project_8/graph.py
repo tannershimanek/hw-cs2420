@@ -108,12 +108,45 @@ class Graph:
         empty list.)
         """
         # FIXME: idk make this work
-        shortest_path = {src: (None, 0)}
-        current_node = src
-        visited = list()
-        return math.inf, []
+        results = {}
+        visited = []
+        distance = 0.0
+        new_distance = 0.0
 
-    def dijkstra_shortest_path_D(self, src, dest) -> dict:
+        # initialize results grid and visited list
+        for vertex in self.graph:
+            weight = self.get_weight(src, vertex)
+            if vertex == src:
+                results[vertex] = (0.0, None)
+                visited.append(True)
+            else:
+                results[vertex] = (math.inf, None)
+                visited.append(False)
+            for index in self.graph[src]:
+                if vertex in index:
+                    results[vertex] = (weight, src)
+                    visited.append(False)
+
+        # find the shortest path from src to vertex
+        print(results)
+        print(visited)
+
+        while False in visited:
+            for i in range(len(visited)):
+                if visited[i] is not True:
+                    # if there is an edge from F to T
+                        # set new_distance to f's distance + edge weight
+                        # if new_distance < T's distance in the results grid
+                            # set T's distance to new_distance
+                            # set T's parent in the result grid to F
+                    visited[i] = True
+            if False not in visited:
+                break
+        # print(visited)
+
+
+
+    def dijkstra_shortest_path_D(self, src) -> dict:
         """Return a dictionary of the shortest weighted
         path between src and all other vertices using
         Dijkstra's Shortest Path algorithm. In the

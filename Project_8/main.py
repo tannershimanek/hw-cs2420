@@ -38,7 +38,8 @@ def main():
     # print(g)
     # print(g.get_graph())
     print(g.dijkstra_shortest_path('A', 'C'))
-    # # print(g)
+    # print(g.dijkstra_shortest_path('B', 'C'))
+    print(g)
     # g.get_weight('A', 'G')
     # g.display_vertices()
     # g.display_graph()
@@ -52,3 +53,15 @@ def main():
 
 
 main()
+
+# for vertex in self.graph:
+#     weight = self.get_weight(src, vertex)
+#     if vertex == src:
+#         results[vertex] = (0.0, None)
+#         visited.append(True)
+#     elif vertex in self.graph[src]:
+#         results[vertex] = (weight, src)
+#         visited.append(False)
+#     else:
+#         results[vertex] = (math.inf, None)
+#         visited.append(False)
