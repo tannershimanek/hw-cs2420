@@ -31,8 +31,9 @@ def main():
 
     # Testing Methods
     g.display_graph()
-    g.display()
+    # g.display()
     # print(g.get_weight('B', 'A'))
+    # print(g.get_weight('B', 'C'))
     # print(g.dfs('A'))
     # print(g.bfs('A'))
     # print(g)

@@ -4,6 +4,7 @@ Date: December 1, 2020
 Description: A graph ADT.
 """
 import math
+import sys
 
 
 class Graph:
@@ -46,7 +47,7 @@ class Graph:
         elif dest not in self.graph:
             raise ValueError(f"Vertex {dest} does not exist.")
         else:
-            temp = [dest, w]
+            temp = (dest, w)
             self.graph[src].append(temp)
         return self
 
@@ -62,9 +63,10 @@ class Graph:
         for index in self.graph[src]:
             if index[0] == dest:
                 return index[1]
-            else:
+            # FIXME: REMOVE ME AFTER TESTING
+            # else:
                 # if dest does not exist in self.graph
-                return math.inf
+                # return math.inf
         return math.inf
 
     def dfs(self, starting_vertex):
@@ -79,7 +81,7 @@ class Graph:
 
     def _dfs_helper(self, visited, node):
         if node not in visited:
-            print(node)  # remove later
+            print(node)  # FIXME: remove later
             visited.append(node)
             for neighbor in self.graph[node]:
                 self._dfs_helper(visited, neighbor[0])
@@ -94,7 +96,7 @@ class Graph:
         queue = [starting_vertex]
         while queue:
             s = queue.pop(0)
-            print(s)  # remove later
+            print(s)  # FIXME: remove later
             for neighbor in self.graph[s]:
                 if neighbor[0] not in visited:
                     visited.append(neighbor[0])
@@ -108,10 +110,54 @@ class Graph:
         empty list.)
         """
         # FIXME: idk make this work
+        shortest_path = {src: (None, 0)}
+        current_node = src
+        weight_to_current_node = 0
+        visited = set()
+
+        while current_node != dest:
+            visited.add(current_node)
+            destinations = self.graph.keys()
+            weight_to_current_node = shortest_path[current_node][1]
+
+            for next_node in destinations:
+                weight = self.get_weight(current_node, next_node) \
+                         + weight_to_current_node
+                if next_node not in shortest_path:
+                    shortest_path[next_node] = (current_node, weight)
+                else:
+                    current_shortest_weight = shortest_path[next_node][1]
+                    if current_shortest_weight > weight:
+                        shortest_path[next_node] = (current_node, weight)
+
+            next_destination = {node: shortest_path[node]
+                                for node in shortest_path if node not in visited}
+            if not next_destination:
+                return math.inf, []
+            # next node is the destination with the lowest weight
+            current_node = min(next_destination, key=lambda k: next_destination[k][1])
+
+        path = []
+        while current_node is not None:
+            path.append(current_node)
+            next_node = shortest_path[current_node][0]
+            current_node = next_node
+        # reverse path
+        # path = path[::-1]
+        return weight_to_current_node, path
+
+    def dijkstra_shortest_path_D(self, src) -> dict:
+        """Return a dictionary of the shortest weighted
+        path between src and all other vertices using
+        Dijkstra's Shortest Path algorithm. In the
+        dictionary,the key is the vertex label, the value
+        is a tuple(path length , the list of vertices on
+        the path from key back to src).
+        """
+        # TODO: Finish this final method
+        # put this here because it may be helpful
         results = {}
-        visited = []
-        distance = 0.0
-        new_distance = 0.0
+        visited = []  # may not be needed
 
         # initialize results grid and visited list
         for vertex in self.graph:
@@ -122,38 +168,9 @@ class Graph:
             else:
                 results[vertex] = (math.inf, None)
                 visited.append(False)
-            for index in self.graph[src]:
-                if vertex in index:
+            for key in self.graph[src]:
+                if vertex in key:
                     results[vertex] = (weight, src)
-                    visited.append(False)
-
-        # find the shortest path from src to vertex
-        print(results)
-        print(visited)
-
-        while False in visited:
-            for i in range(len(visited)):
-                if visited[i] is not True:
-                    # if there is an edge from F to T
-                        # set new_distance to f's distance + edge weight
-                        # if new_distance < T's distance in the results grid
-                            # set T's distance to new_distance
-                            # set T's parent in the result grid to F
-                    visited[i] = True
-            if False not in visited:
-                break
-        # print(visited)
-
-
-
-    def dijkstra_shortest_path_D(self, src) -> dict:
-        """Return a dictionary of the shortest weighted
-        path between src and all other vertices using
-        Dijkstra's Shortest Path algorithm. In the
-        dictionary,the key is the vertex label, the value
-        is a tuple(path length , the list of vertices on
-        the path from key back to src).
-        """
         print('TODO: dijkstra_shortest_path()')
         return {'None': 0}
 
@@ -168,6 +185,7 @@ class Graph:
         return output
 
     # ------ TESTING METHODS ------ #
+    # FIXME: remove later
 
     def display(self):
         for vertex in self.graph:
