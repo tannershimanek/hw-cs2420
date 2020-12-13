@@ -83,7 +83,7 @@ class TestGraphPaths(unittest.TestCase):
         g.add_edge("E", "C", 7)
         g.add_edge("E", "D", 3)
         g.add_edge("F", "E", 3)
-        self.assertRaises(ValueError, g.dijkstra_shortest_path, "cat")
+        self.assertRaises(ValueError, g.dijkstra_shortest_path_All, "cat")
         data = g.dijkstra_shortest_path("A", "B")
         self.assertIsInstance(data, tuple)
         self.assertEqual(data, (2.0, ['B', 'A']))
@@ -95,10 +95,10 @@ class TestGraphPaths(unittest.TestCase):
         self.assertEqual(data, (8.0, ['F', 'B', 'A']))
         data = g.dijkstra_shortest_path("D",'A')
         self.assertEqual(data, (math.inf, []))
-        data = g.dijkstra_shortest_path("A")
+        data = g.dijkstra_shortest_path_All("A")
         self.assertIsInstance(data, dict)
         self.assertDictEqual(data, {'A':(0.0, ['A']), 'B':(2.0, ['B', 'A']), 'C':(10.0, ['C', 'B', 'A']), 'D':(11.0, ['D', 'C', 'B', 'A']), 'E':(11.0, ['E', 'F', 'B', 'A']), 'F':(8.0, ['F', 'B', 'A'])})
-        data = g.dijkstra_shortest_path("D")
+        data = g.dijkstra_shortest_path_All("D")
         self.assertDictEqual(data, {'A':(math.inf, []), 'B':(math.inf, []), 'C':(math.inf, []), 'D':(0.0, ['D']), 'E':(math.inf, []), 'F':(math.inf, [])})
 
 class TestCodeingStandards(unittest.TestCase):
